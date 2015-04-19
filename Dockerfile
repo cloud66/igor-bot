@@ -16,4 +16,8 @@ ADD setup.sh setup.sh
 RUN gem install lita -v ${LITA_VERSION} && \
     gem install lita-slack
 
-CMD if [ -e ./setup.sh ]; then ./setup.sh; fi && lita start
+CMD if [ -e ./setup.sh ]; then \
+      ./setup.sh; \
+    fi && \
+    bundle install && \
+    lita start
