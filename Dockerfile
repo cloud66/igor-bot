@@ -1,4 +1,4 @@
-FROM ruby:2.2
+FROM litaio/ruby:2.2.1
 
 ENV LITA_VERSION 4.3.2
 ENV LITA_INFO_LEVEL debug
