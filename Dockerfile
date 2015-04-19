@@ -13,7 +13,8 @@ VOLUME /opt/lita
 
 ADD setup.sh setup.sh
 
-RUN gem install lita -v ${LITA_VERSION} && \
+RUN echo "gem: --no-ri --no-rdoc" > /.gemrc && \
+    gem install lita -v ${LITA_VERSION} && \
     gem install lita-slack
 
 CMD if [ -e ./setup.sh ]; then \
