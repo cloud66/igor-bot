@@ -6,7 +6,7 @@ Run the lita bot for slack
 
 [**Trusted Build**](https://registry.hub.docker.com/u/uzyexe/lita-slack/)
 
-This Docker image is based on the [litaio/ruby:2.2.1](https://registry.hub.docker.com/u/litaio/ruby/) base image.
+This Docker image is based on the [litaio/ruby:2.2.2](https://registry.hub.docker.com/u/litaio/ruby/) base image.
 
 ## Using
 
