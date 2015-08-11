@@ -1,7 +1,7 @@
 Lita.configure do |config|
-  config.robot.log_level = :${LITA_INFO_LEVEL}
-  config.redis[:host] = "${REDIS_HOST}"
-  config.redis[:port] = ${REDIS_PORT}
+  config.robot.log_level = ENV['LITA_INFO_LEVEL'].to_sym
+  config.redis[:host] = ENV['REDIS_HOST']
+  config.redis[:port] = ENV['REDIS_PORT']
   config.robot.adapter = :slack
-  config.adapters.slack.token = "${SLACK_TOKEN}"
+  config.adapters.slack.token = ENV['SLACK_TOKEN']
 end
