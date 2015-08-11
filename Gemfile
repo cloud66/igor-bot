@@ -1,5 +1,5 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "lita"
-gem "lita-slack"
-gem "lita-applause"
+gem 'lita', '~> 4.4.3'
+gem 'lita-slack'
+gem 'lita-applause'
