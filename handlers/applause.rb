@@ -14,10 +14,10 @@ module Handlers
 			'http://sunglasses.name/gif/joker-clap.gif',
 			'http://www.reactiongifs.com/wp-content/uploads/2013/01/applause.gif'
 		]
-		route(/^(applau(d|se)|bravo|slow clap)/i, :applause, command: true, help: { 'applause' => 'Sends image of applause.' })
+		route(/^clap/i, :applause, command: true, help: { applause: 'Sends image of applause' })
 
 		def applause(response)
-			response.reply IMAGES.sample
+			response.reply 'got the clap'
 		end
 	end
 
