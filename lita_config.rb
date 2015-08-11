@@ -1,3 +1,5 @@
+Dir["plugins/*.rb"].each {|file| require file }
+
 Lita.configure do |config|
   config.robot.log_level = ENV['LITA_INFO_LEVEL'].to_sym
   config.redis[:host] = ENV['REDIS_HOST']
