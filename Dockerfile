@@ -10,5 +10,4 @@ RUN echo "gem: --no-ri --no-rdoc" > /.gemrc && \
     gem install lita-slack
 
 ADD run.sh run.sh
-
-CMD ./run.sh
+CMD ./setup.sh && ./run.sh
