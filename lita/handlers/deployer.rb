@@ -8,8 +8,8 @@ module Lita
 			WARNING_MOD = 10
 			DEPLOY_PREFIX = 'igor_deployer'
 
-			route(/^deploy\s+[a-zA-Z0-9-_]+\s*[a-zA-Z0-9-,_]*$/i, :deploy, command: true, help: { deployer: 'Start deploys!' })
-			route(/^stop\sdeploy$/i, :stop_deploy, command: true, help: { deployer: 'Stop all pending deploys!' })
+			route(/\Adeploy\s+/i, :deploy, command: true, help: { deployer: 'Start deploys!' })
+			route(/\A(stop|cancel|quit)\sdeploy(|s|ment|ments)\z/i, :stop_deploy, command: true, help: { deployer: 'Stop all pending deploys!' })
 
 			def deploy(context)
 				return unless context.message.command?
@@ -18,7 +18,8 @@ module Lita
 				args = args.reject { |arg| arg =~ /^me$/ }
 
 				stack_name = args[0]
-				context.reply 'No no no... what is a me? hur hur!' and return if stack_name.nil? || stack_name.empty?
+				context.reply 'No no no... what is a me? hur hur hur!' and return if stack_name.nil? || stack_name.empty?
+				context.reply 'No no no... too many arguments! hur hur hur!' and return if args.size > 2
 
 				if args.size > 1
 					modifier = args[1]
@@ -67,7 +68,6 @@ module Lita
 				end
 
 				http_resp = HTTParty.post(redeployment_hook_url, {})
-
 				if http_resp.code != 200
 					context.reply "No no no... got a non-200 response from the \"#{stack_name}\" web hook!"
 				else
