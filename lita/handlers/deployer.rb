@@ -20,7 +20,7 @@ module Lita
 					modifier = ''
 				end
 
-				stack_envs = ENV.keys.select { |stack_env| stack_env =~ /^#{stack_name}/i }
+				stack_envs = ENV.keys.select { |stack_env| stack_env =~ /^#{stack_name}.*_hook/i }
 				context.reply "No no no... no stack found for \"#{stack_name}\"" and return if stack_envs.nil? || stack_envs.empty?
 				context.reply "No no no... more than one stack found for \"#{stack_name}\"" and return if stack_envs.size > 1
 
