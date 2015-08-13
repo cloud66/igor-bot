@@ -44,8 +44,6 @@ module Lita
 					service_args = ''
 				end
 
-				ENV['STAGING_HOOK'] = 'babana'
-
 				stack_envs = ENV.keys.select { |stack_env| stack_env =~ /^#{stack_name}.*_hook/i }
 				context.reply "No no no... no stack found for \"#{stack_name}\"" and return if stack_envs.nil? || stack_envs.empty?
 				context.reply "No no no... more than one stack found for \"#{stack_name}\"" and return if stack_envs.size > 1
@@ -104,8 +102,27 @@ module Lita
 					end
 				end
 
-				http_resp = HTTParty.post(redeployment_hook_url, {})
-				if http_resp.code != 200
+				# if this is staging, better check if anything is running (special case)
+				unless force
+					if stack_env == 'STAGING_HOOK'
+						http_resp = HTTParty.get(STAGING_WORKERS_URL) rescue nil
+						if http_resp.nil? || http_resp.code != 200
+							context.reply 'Oh... could not get the busy worker count on staging... skipping this step'
+						else
+							params = http_resp.parsed_response
+							worker_count = params['response']['workers_size'].to_i rescue 0
+							if worker_count > 0
+								context.reply "No no no... there are busy workers on staging... not deploying! (To ignore this use: force deploy  \"#{stack_name}\")"
+								return
+							end
+						end
+					end
+				end
+
+				http_resp = HTTParty.post(redeployment_hook_url, {}) rescue nil
+				if http_resp.nil?
+					context.reply "No no no... got an unhandled exception response from the \"#{stack_name}\" web hook!"
+				elsif http_resp.code != 200
 					context.reply "No no no... got a non-200 response from the \"#{stack_name}\" web hook!"
 				else
 					context.reply "Whoop whoop \"#{stack_name}\" deploy started! Hur hur hur"
