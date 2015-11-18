@@ -30,10 +30,16 @@ module Lita
 			def stop_deploy(context)
 				return unless context.message.command?
 				keys_wildcard = "*#{DEPLOY_PREFIX}.*"
-				context.reply 'Attempting to stop...'
+
+				flagged = false
 				redis.keys(keys_wildcard).each do |key|
-					redis.set(key, 'false')
+					if redis.get(key) == 'true'
+						flagged = true
+						redis.set(key, 'false')
+					end
 				end
+
+				context.reply 'Attempting to stop...' if flagged
 			end
 
 			private
@@ -53,7 +59,7 @@ module Lita
 
 				deploy_key = "#{DEPLOY_PREFIX}.#{stack_env}"
 				exists = redis.get(deploy_key)
-				context.reply "No no no... a deploy for #{stack_name} is already in progress..." and return if exists
+				context.reply "No no no... an igor deploy for #{stack_name} is already in progress..." and return if exists
 
 				# register this deploy
 				redis.set(deploy_key, 'true')
@@ -90,6 +96,7 @@ module Lita
 					context.reply "Hmmmmm... #{stack_name} - #{deploy_status[:error]}" unless deploy_status[:error].nil?
 				end
 
+				redis.set(deploy_key, 'false')
 				http_resp = HTTParty.post(redeployment_hook_url, {}) rescue nil
 				if http_resp.nil?
 					context.reply "No no no... got an unhandled exception response from the #{stack_name} web hook!"
@@ -111,7 +118,7 @@ module Lita
 					deploy_status = get_deploy_status(redeployment_hook_url)
 					context.reply 'No no no... something is wrong! Waited more that 10 minutes...!' and return if iterations > 20
 				end
-				context.reply "Wooohooo #{stack_name} finished deploying!" and return if iterations > 20
+				context.reply "Wooohooo #{stack_name} finished deploying!"
 			ensure
 				# always get rid of that redis key when done
 				redis.del(deploy_key)
