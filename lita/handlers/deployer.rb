@@ -48,9 +48,6 @@ module Lita
 				stack_env = stack_envs.first
 				redeployment_hook_url = ENV.fetch(stack_env)
 
-				# redeployment_hook_url = 'https://hooks.cloud66.com/stacks/redeploy/483c35f079c4f33aa2582ea085d17ae0/c4fbff2a726685f812b6eb16197c616f'
-				# stack_env = 'STAGING_HOOK'
-
 				stack_name = stack_env.gsub(/_HOOK$/, '')
 				redeployment_hook_url = "#{redeployment_hook_url}?services=#{service_name}" unless service_name.nil?
 
@@ -144,9 +141,9 @@ module Lita
 					params = http_resp.parsed_response
 					worker_count = params['response']['workers_info'].size rescue 0
 					if worker_count > 0
-						return { is_busy: false }
-					else
 						return { is_busy: true }
+					else
+						return { is_busy: false }
 					end
 				end
 			end
