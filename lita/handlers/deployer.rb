@@ -29,27 +29,26 @@ module Lita
 
 			def stop_deploy(context)
 				return unless context.message.command?
-
 				keys_wildcard = "*#{DEPLOY_PREFIX}.*"
-				context.reply "DEBUG: #{keys_wildcard}"
 				flagged = false
 				redis.keys(keys_wildcard).each do |key|
-					context.reply "DEBUG: #{key}"
 					if redis.get(key) == 'true'
 						flagged = true
 						redis.set(key, 'false')
-						context.reply 'DEBUG: Set key to false'
 					end
 				end
-
-				context.reply 'Attempting to stop...' if flagged
+				if flagged
+					context.reply '...Attempting to stop...'
+				else
+					context.reply 'No no no... No pending deploys were found! Hur hur hur'
+				end
 			end
 
 			private
 
 			def deploy(context, stack_name:, service_name:, force:, later:)
-				context.reply 'No no no... need to know what stack to deploy! hur hur hur!' and return if stack_name.nil? || stack_name.empty?
-				context.reply 'No no no... force or wait? Can\'t do both! hur hur hur!' and return if force && asap
+				context.reply 'No no no... need to know what stack to deploy! Hur hur hur!' and return if stack_name.nil? || stack_name.empty?
+				context.reply 'No no no... force or wait? Can\'t do both! Hur hur hur!' and return if force && asap
 
 				stack_envs = ENV.keys.select { |stack_env| stack_env =~ /^#{stack_name}.*_hook/i }
 				context.reply "No no no... no stack found for \"#{stack_name}\"" and return if stack_envs.nil? || stack_envs.empty?
