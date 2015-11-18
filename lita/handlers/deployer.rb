@@ -84,8 +84,8 @@ module Lita
 								end
 							end
 						else
-							context.reply "No no no... #{stack_name} is busy... not deploying!" and return if worker_status[:is_busy]
-							context.reply "No no no... #{stack_name} has busy workers... not deploying!" and return if deploy_status[:is_busy]
+							context.reply "No no no... #{stack_name} is busy on prod... not deploying!" and return if deploy_status[:is_busy]
+							context.reply "No no no... #{stack_name} has busy workers... not deploying!" and return if worker_status[:is_busy]
 						end
 					end
 
@@ -114,9 +114,10 @@ module Lita
 					deploy_status = get_deploy_status(redeployment_hook_url)
 					context.reply 'No no no... something is wrong! Waited more that 10 minutes...!' and return if iterations > 20
 				end
-
-				redis.del(deploy_key)
 				context.reply "Wooohooo #{stack_name} finished deploying!" and return if iterations > 20
+			ensure
+				# always get rid of that redis key when done
+				redis.del(deploy_key)
 			end
 
 			def get_deploy_status(redeploy_hook)
