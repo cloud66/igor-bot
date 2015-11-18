@@ -9,7 +9,7 @@ module Lita
 			DEPLOY_PREFIX = 'igor_deployer'
 			STAGING_WORKERS_URL = 'https://stage.cloud66.com/api/tooling/igor/sidekiq/stats.json'
 			PROD_STACK_CHECK_URL = 'https://app.cloud66.com/api/tooling/igor/stack_busy'
-			DEPLOY_REGEX = /\A\s*((?<force>force)\s|)(re|)deploy(\sme\s|\s)(?<stack_name>[a-z-_]+)(::(?<service_name>[a-z-_]+)|)(\s(now|immediately)|\s(?<later>asap|soon|later)|)\s*\z/i
+			DEPLOY_REGEX = /\A\s*((?<force>force)\s|)(re|)deploy(\sme\s|\s)(?<stack_name>[a-z-_]+)(::(?<service_name>[a-z-_,]+)|)(\s(now|immediately)|\s(?<later>asap|soon|later)|)\s*\z/i
 			STOP_REGEX = /\A(end|stop|cancel|quit|kill|terminate|end)\sdeploy(|ing|s|ment|ments)\z/i
 
 			route(DEPLOY_REGEX, :do_deploy, command: true, help: { deployer: "deploy: Deploy!\nMore info!" })
@@ -106,7 +106,11 @@ module Lita
 				elsif http_resp.code != 200
 					context.reply "No no no... got a non-200 response from the #{stack_name} web hook!"
 				else
-					context.reply "Whoop whoop! #{stack_name} deploy started! Hur hur hur"
+					if service_name.nil?
+						context.reply "Whoop whoop! #{stack_name} deploy started! Hur hur hur"
+					else
+						context.reply "Whoop whoop! #{stack_name} (#{service_name}) deploy started! Hur hur hur"
+					end
 
 					# wait for deploy to start
 					sleep(10)
