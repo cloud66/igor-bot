@@ -59,7 +59,7 @@ module Lita
 
 				deploy_key = "#{DEPLOY_PREFIX}.#{stack_env}"
 				exists = redis.get(deploy_key)
-				context.reply "No no no... an igor deploy for #{stack_name} is already in progress..." and return if exists
+				context.reply "No no no... an igor deploy for #{stack_name} is already waiting..." and return if exists == 'true'
 
 				# register this deploy
 				redis.set(deploy_key, 'true')
