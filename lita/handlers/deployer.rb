@@ -38,9 +38,9 @@ module Lita
 					end
 				end
 				if flagged
-					context.reply 'OK: Sending stop signal...'
+					context.reply '>> Sending stop signal'
 				else
-					context.reply 'No: pending deploys not found'
+					context.reply 'No >> pending deploys not found'
 				end
 			end
 
@@ -71,7 +71,7 @@ module Lita
 					deploy_status = get_deploy_status(redeployment_hook_url)
 					if worker_status[:is_busy] || deploy_status[:is_busy]
 						if later
-							context.reply "OK: #{stack_name} deploy queued"
+							context.reply ">> #{stack_name} deploy queued"
 							iterations = 0
 							while worker_status[:is_busy] || deploy_status[:is_busy]
 								iterations += 1
@@ -84,7 +84,7 @@ module Lita
 								its_a_go = redis.get(deploy_key)
 								if its_a_go == 'false'
 									redis.del(deploy_key)
-									context.reply "OK: #{stack_name} deploy cancelled"
+									context.reply ">> #{stack_name} deploy cancelled"
 									return
 								end
 							end
@@ -106,9 +106,9 @@ module Lita
 					context.reply "No: #{stack_name} web hook non-200 response"
 				else
 					if service_name.nil?
-						context.reply "OK: #{stack_name} deploy started..."
+						context.reply ">> #{stack_name} deploying"
 					else
-						context.reply "OK: #{stack_name} [#{service_name}] deploy started..."
+						context.reply ">> #{stack_name} [#{service_name}] deploying"
 					end
 
 					# wait for deploy to start
@@ -123,7 +123,7 @@ module Lita
 						deploy_status = get_deploy_status(redeployment_hook_url)
 						context.reply 'No: Timed out after 10 minutes!' and return if iterations > 30
 					end
-					context.reply "OK: #{stack_name} deploy complete!"
+					context.reply ">> #{stack_name} complete!"
 				end
 			ensure
 				# always get rid of that redis key when done
