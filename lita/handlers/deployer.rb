@@ -5,7 +5,6 @@ module Lita
 	module Handlers
 		class Deployer < Lita::Handler
 
-			WARNING_SECONDS = 30
 			WARNING_MOD = 10
 			DEPLOY_PREFIX = 'igor_deployer'
 			STAGING_WORKERS_URL = 'https://stage.cloud66.com/api/tooling/igor/sidekiq/stats.json'
@@ -36,112 +35,91 @@ module Lita
 				context.reply 'No no no... need to know what stack to deploy! hur hur hur!' and return if stack_name.nil? || stack_name.empty?
 				context.reply 'No no no... force or wait? Can\'t do both! hur hur hur!' and return if force && asap
 
-				# stack_envs = ENV.keys.select { |stack_env| stack_env =~ /^#{stack_name}.*_hook/i }
-				# context.reply "No no no... no stack found for \"#{stack_name}\"" and return if stack_envs.nil? || stack_envs.empty?
-				# context.reply "No no no... more than one stack found for \"#{stack_name}\"" and return if stack_envs.size > 1
-				# stack_env = stack_envs.first
-				# redeployment_hook_url = ENV.fetch(stack_env)
+				stack_envs = ENV.keys.select { |stack_env| stack_env =~ /^#{stack_name}.*_hook/i }
+				context.reply "No no no... no stack found for \"#{stack_name}\"" and return if stack_envs.nil? || stack_envs.empty?
+				context.reply "No no no... more than one stack found for \"#{stack_name}\"" and return if stack_envs.size > 1
+				stack_env = stack_envs.first
+				redeployment_hook_url = ENV.fetch(stack_env)
 
-				redeployment_hook_url = 'https://hooks.cloud66.com/stacks/redeploy/483c35f079c4f33aa2582ea085d17ae0/c4fbff2a726685f812b6eb16197c616f'
-				stack_env = 'STAGING_HOOK'
+				# redeployment_hook_url = 'https://hooks.cloud66.com/stacks/redeploy/483c35f079c4f33aa2582ea085d17ae0/c4fbff2a726685f812b6eb16197c616f'
+				# stack_env = 'STAGING_HOOK'
 
+				stack_name = stack_env.gsub(/_HOOK$/, '')
 				redeployment_hook_url = "#{redeployment_hook_url}?services=#{service_name}" unless service_name.nil?
 
-				
+				deploy_key = "#{DEPLOY_PREFIX}.#{stack_env}"
+				exists = redis.get(deploy_key)
+				context.reply "No no no... a deploy for #{stack_name} is already in progress..." and return if exists
+
+				# register this deploy
+				redis.set(deploy_key, 'true')
 
 				unless force
 					worker_status = get_worker_status(stack_env)
 					deploy_status = get_deploy_status(redeployment_hook_url)
 					if worker_status[:is_busy] || deploy_status[:is_busy]
 						if later
+							context.reply "#{stack_name} is busy... I'll deploy it as soon as it's done! Hur hur hur!"
 							iterations = 0
 							while worker_status[:is_busy] || deploy_status[:is_busy]
 								iterations += 1
-								sleep(15)
+								sleep(20)
 								worker_status = get_worker_status(stack_env)
 								deploy_status = get_deploy_status(redeployment_hook_url)
+
+								context.reply 'No no no... something is wrong! Waited more that 10 minutes...!' and return if iterations > 30
+
+								its_a_go = redis.get(deploy_key)
+								if its_a_go == 'false'
+									redis.del(deploy_key)
+									context.reply "#{stack_name} deploy cancelled! Hur hur hur"
+									return
+								end
 							end
 						else
-							if worker_status[:is_busy]
-								context.reply "No no no... deploy for \"#{stack_name}\" is already in progress! (Use: \"igor force ...\" or \"igor deploy ... asap\")"
-								return
-							end
-							if deploy_status[:is_busy]
-								context.reply 'No no no... there are busy workers on staging... not deploying! (Use: "igor force ..." or "igor deploy ... asap" )'
-								return
-							end
+							context.reply "No no no... #{stack_name} is busy... not deploying!" and return if worker_status[:is_busy]
+							context.reply "No no no... #{stack_name} has busy workers... not deploying!" and return if deploy_status[:is_busy]
 						end
 					end
+
+					context.reply "Hmmmmm... #{stack_name} - #{worker_status[:error]}" unless worker_status[:error].nil?
+					context.reply "Hmmmmm... #{stack_name} - #{deploy_status[:error]}" unless deploy_status[:error].nil?
 				end
 
-
-				# http_resp = HTTParty.post(redeployment_hook_url, {}) rescue nil
-				# if http_resp.nil?
-				# 	context.reply "No no no... got an unhandled exception response from the \"#{stack_name}\" web hook!"
-				# elsif http_resp.code != 200
-				# 	context.reply "No no no... got a non-200 response from the \"#{stack_name}\" web hook!"
-				# else
-				# 	context.reply "Whoop whoop \"#{stack_name}\" deploy started! Hur hur hur"
-				# end
-
-
-				#TODO wait for response
-
-				# 	start_time = Time.new
-				# 	redis.setex(deploy_key, WARNING_SECONDS, 'true')
-				#
-				# 	its_a_go = redis.get(deploy_key)
-				# 	notified_at_zero = false
-				#
-				# 	while its_a_go == 'true'
-				# 		elapsed_seconds = (Time.new - start_time).round
-				# 		remaining_seconds = (WARNING_SECONDS - elapsed_seconds)
-				# 		remaining_seconds = 0 if remaining_seconds < 0
-				#
-				# 		if remaining_seconds % WARNING_MOD == 0 && !notified_at_zero
-				# 			context.reply "\"#{stack_name}\" deploying in #{WARNING_SECONDS - elapsed_seconds} seconds..."
-				# 			notified_at_zero = true if remaining_seconds == 0
-				# 		end
-				#
-				# 		sleep(1)
-				# 		its_a_go = redis.get(deploy_key)
-				# 	end
-				#
-				# 	if its_a_go == 'false'
-				# 		redis.del(deploy_key)
-				# 		context.reply "\"#{stack_name}\" deploy cancelled! Hur hur hur"
-				# 		return
-				# 	end
-				# end
-
-=begin
-				# if this is staging, better check if anything is running (special case)
-				unless force
-					if stack_env == 'STAGING_HOOK'
-						http_resp = HTTParty.get(STAGING_WORKERS_URL) rescue nil
-						if http_resp.nil? || http_resp.code != 200
-							context.reply 'Oh... could not get the busy worker count on staging... skipping this step'
-						else
-							params = http_resp.parsed_response
-							worker_count = params['response']['workers_size'].to_i rescue 0
-							if worker_count > 0
-								context.reply "No no no... there are busy workers on staging... not deploying! (To ignore this use: force deploy  \"#{stack_name}\")"
-								return
-							end
-						end
-					end
+				http_resp = HTTParty.post(redeployment_hook_url, {}) rescue nil
+				if http_resp.nil?
+					context.reply "No no no... got an unhandled exception response from the #{stack_name} web hook!"
+				elsif http_resp.code != 200
+					context.reply "No no no... got a non-200 response from the #{stack_name} web hook!"
+				else
+					context.reply "Whoop whoop! #{stack_name} deploy started! Hur hur hur"
 				end
-=end
+
+				# wait for deploy to start
+				sleep(10)
+
+				# wait for deploy to end
+				iterations = 0
+				deploy_status = get_deploy_status(redeployment_hook_url)
+				while deploy_status[:is_busy]
+					iterations += 1
+					sleep(30)
+					deploy_status = get_deploy_status(redeployment_hook_url)
+					context.reply 'No no no... something is wrong! Waited more that 10 minutes...!' and return if iterations > 20
+				end
+
+				redis.del(deploy_key)
+				context.reply "Wooohooo #{stack_name} finished deploying!" and return if iterations > 20
 			end
 
-			# def stop_deploy(context)
-			# 	return unless context.message.command?
-			# 	keys_wildcard = "*#{DEPLOY_PREFIX}.*"
-			# 	context.reply 'Attempting to stop...'
-			# 	redis.keys(keys_wildcard).each do |key|
-			# 		redis.set(key, 'false')
-			# 	end
-			# end
+			def stop_deploy(context)
+				return unless context.message.command?
+				keys_wildcard = "*#{DEPLOY_PREFIX}.*"
+				context.reply 'Attempting to stop...'
+				redis.keys(keys_wildcard).each do |key|
+					redis.set(key, 'false')
+				end
+			end
 
 			private
 
@@ -152,7 +130,7 @@ module Lita
 
 				http_resp = HTTParty.get(check_url) rescue nil
 				if http_resp.nil? || http_resp.code != 200
-					return { is_busy: false, error: 'Could not get the state... continuing!' }
+					return { is_busy: false, error: 'Could not get the deploy state... continuing!' }
 				else
 					params = http_resp.parsed_response
 					is_busy = params['response']['is_busy']
@@ -164,7 +142,7 @@ module Lita
 				return { is_busy: false } if stack_env != 'STAGING_HOOK'
 				http_resp = HTTParty.get(STAGING_WORKERS_URL) rescue nil
 				if http_resp.nil? || http_resp.code != 200
-					return { is_busy: false, error: 'Could not get the worker state on staging... continuing!' }
+					return { is_busy: false, error: 'Could not get the worker state... continuing!' }
 				else
 					params = http_resp.parsed_response
 					worker_count = params['response']['workers_info'].size rescue 0
