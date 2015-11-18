@@ -8,16 +8,12 @@ module Lita
 			WARNING_MOD = 10
 			DEPLOY_PREFIX = 'igor_deployer'
 			STAGING_WORKERS_URL = 'https://stage.cloud66.com/api/tooling/igor/sidekiq/stats.json'
-			# PROD_STACK_CHECK_URL = 'https://app.cloud66.com/api/tooling/igor/stack_busy'
-			PROD_STACK_CHECK_URL = 'https://stage.cloud66.com/api/tooling/igor/stack_busy'
-
-
-			# PROD_STACK_CHECK_URL = 'https://app.cloud66.com/api/tooling/igor/stack_busy'
-
+			PROD_STACK_CHECK_URL = 'https://app.cloud66.com/api/tooling/igor/stack_busy'
 			DEPLOY_REGEX = /\A\s*((?<force>force)\s|)(re|)deploy(\sme\s|\s)(?<stack_name>[a-z]+)(::(?<service_name>[a-z]+)|)(\s(now|immediately)|\s(?<later>asap|soon|later)|)\s*\z/i
+			STOP_REGEX = /\A(stop|cancel|quit|kill|terminate|end)\sdeploy(|ing|s|ment|ments)\z/i
 
 			route(DEPLOY_REGEX, :do_deploy, command: true, help: { deployer: "deploy: Deploy!\nMore info!" })
-			route(/\A(stop|cancel|quit|kill|terminate|end)\sdeploy(|ing|s|ment|ments)\z/i, :stop_deploy, command: true, help: { deployer: 'stop deploy: Stop all pending deploys!' })
+			route(STOP_REGEX, :stop_deploy, command: true, help: { deployer: 'stop deploy: Stop all pending deploys!' })
 
 			def do_deploy(context)
 				return unless context.message.command?
@@ -30,6 +26,17 @@ module Lita
 
 				deploy(context, stack_name: _stack_name, service_name: _service_name, force: _force, later: _later)
 			end
+
+			def stop_deploy(context)
+				return unless context.message.command?
+				keys_wildcard = "*#{DEPLOY_PREFIX}.*"
+				context.reply 'Attempting to stop...'
+				redis.keys(keys_wildcard).each do |key|
+					redis.set(key, 'false')
+				end
+			end
+
+			private
 
 			def deploy(context, stack_name:, service_name:, force:, later:)
 				context.reply 'No no no... need to know what stack to deploy! hur hur hur!' and return if stack_name.nil? || stack_name.empty?
@@ -103,7 +110,7 @@ module Lita
 				deploy_status = get_deploy_status(redeployment_hook_url)
 				while deploy_status[:is_busy]
 					iterations += 1
-					sleep(30)
+					sleep(20)
 					deploy_status = get_deploy_status(redeployment_hook_url)
 					context.reply 'No no no... something is wrong! Waited more that 10 minutes...!' and return if iterations > 20
 				end
@@ -111,17 +118,6 @@ module Lita
 				redis.del(deploy_key)
 				context.reply "Wooohooo #{stack_name} finished deploying!" and return if iterations > 20
 			end
-
-			def stop_deploy(context)
-				return unless context.message.command?
-				keys_wildcard = "*#{DEPLOY_PREFIX}.*"
-				context.reply 'Attempting to stop...'
-				redis.keys(keys_wildcard).each do |key|
-					redis.set(key, 'false')
-				end
-			end
-
-			private
 
 			def get_deploy_status(redeploy_hook)
 				redeploy_key = redeploy_hook.gsub(/^.*\//, '')
