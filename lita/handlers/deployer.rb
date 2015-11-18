@@ -9,7 +9,7 @@ module Lita
 			DEPLOY_PREFIX = 'igor_deployer'
 			STAGING_WORKERS_URL = 'https://stage.cloud66.com/api/tooling/igor/sidekiq/stats.json'
 			PROD_STACK_CHECK_URL = 'https://app.cloud66.com/api/tooling/igor/stack_busy'
-			DEPLOY_REGEX = /\A\s*((?<force>force)\s|)(re|)deploy(\sme\s|\s)(?<stack_name>[a-z]+)(::(?<service_name>[a-z]+)|)(\s(now|immediately)|\s(?<later>asap|soon|later)|)\s*\z/i
+			DEPLOY_REGEX = /\A\s*((?<force>force)\s|)(re|)deploy(\sme\s|\s)(?<stack_name>[a-z-_]+)(::(?<service_name>[a-z-_]+)|)(\s(now|immediately)|\s(?<later>asap|soon|later)|)\s*\z/i
 			STOP_REGEX = /\A(stop|cancel|quit|kill|terminate|end)\sdeploy(|ing|s|ment|ments)\z/i
 
 			route(DEPLOY_REGEX, :do_deploy, command: true, help: { deployer: "deploy: Deploy!\nMore info!" })
@@ -104,21 +104,21 @@ module Lita
 					context.reply "No no no... got a non-200 response from the #{stack_name} web hook!"
 				else
 					context.reply "Whoop whoop! #{stack_name} deploy started! Hur hur hur"
-				end
 
-				# wait for deploy to start
-				sleep(10)
+					# wait for deploy to start
+					sleep(10)
 
-				# wait for deploy to end
-				iterations = 0
-				deploy_status = get_deploy_status(redeployment_hook_url)
-				while deploy_status[:is_busy]
-					iterations += 1
-					sleep(20)
+					# wait for deploy to end
+					iterations = 0
 					deploy_status = get_deploy_status(redeployment_hook_url)
-					context.reply 'No no no... something is wrong! Waited more that 10 minutes...!' and return if iterations > 20
+					while deploy_status[:is_busy]
+						iterations += 1
+						sleep(20)
+						deploy_status = get_deploy_status(redeployment_hook_url)
+						context.reply 'No no no... something is wrong! Waited more that 10 minutes...!' and return if iterations > 20
+					end
+					context.reply "Wooohooo #{stack_name} finished deploying!"
 				end
-				context.reply "Wooohooo #{stack_name} finished deploying!"
 			ensure
 				# always get rid of that redis key when done
 				redis.del(deploy_key)
