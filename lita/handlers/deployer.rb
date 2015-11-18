@@ -10,7 +10,7 @@ module Lita
 			STAGING_WORKERS_URL = 'https://stage.cloud66.com/api/tooling/igor/sidekiq/stats.json'
 			PROD_STACK_CHECK_URL = 'https://app.cloud66.com/api/tooling/igor/stack_busy'
 			DEPLOY_REGEX = /\A\s*((?<force>force)\s|)(re|)deploy(\sme\s|\s)(?<stack_name>[a-z-_]+)(::(?<service_name>[a-z-_]+)|)(\s(now|immediately)|\s(?<later>asap|soon|later)|)\s*\z/i
-			STOP_REGEX = /\A(stop|cancel|quit|kill|terminate|end)\sdeploy(|ing|s|ment|ments)\z/i
+			STOP_REGEX = /\A(end|stop|cancel|quit|kill|terminate|end)\sdeploy(|ing|s|ment|ments)\z/i
 
 			route(DEPLOY_REGEX, :do_deploy, command: true, help: { deployer: "deploy: Deploy!\nMore info!" })
 			route(STOP_REGEX, :stop_deploy, command: true, help: { deployer: 'stop deploy: Stop all pending deploys!' })
@@ -29,13 +29,16 @@ module Lita
 
 			def stop_deploy(context)
 				return unless context.message.command?
-				keys_wildcard = "*#{DEPLOY_PREFIX}.*"
 
+				keys_wildcard = "*#{DEPLOY_PREFIX}.*"
+				context.reply "DEBUG: #{keys_wildcard}"
 				flagged = false
 				redis.keys(keys_wildcard).each do |key|
+					context.reply "DEBUG: #{key}"
 					if redis.get(key) == 'true'
 						flagged = true
 						redis.set(key, 'false')
+						context.reply 'DEBUG: Set key to false'
 					end
 				end
 
