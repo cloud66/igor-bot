@@ -20,9 +20,9 @@ module Lita
 						  :stack_name
 
 			def do_deploy(context)
-				@context = context
-				return unless @context.message.command?
+				return unless context.message.command?
 
+				@context = context
 				match_data = DEPLOY_REGEX.match(@context.message.body)
 				@fun = !match_data[:fun].nil?
 				@stack_name = match_data[:stack_name]
@@ -34,9 +34,9 @@ module Lita
 			end
 
 			def stop_deploy(context)
-				@context = context
-				return unless @context.message.command?
+				return unless context.message.command?
 
+				@context = context
 				match_data = DEPLOY_REGEX.match(@context.message.body)
 				@fun = !match_data[:fun].nil?
 
