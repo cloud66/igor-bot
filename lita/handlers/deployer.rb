@@ -17,7 +17,8 @@ module Lita
 
 			attr_accessor :fun,
 						  :context,
-						  :stack_name
+						  :stack_name,
+						  :service_name
 
 			def do_deploy(context)
 				return unless context.message.command?
@@ -170,22 +171,30 @@ module Lita
 			# state :ok, :warn:, :error
 			def reply(state, message)
 				if @stack_name && @service_name
-					header = "> #{@stack_name}::#{@service_name.upcase} "
+					title = "#{@stack_name}::#{@service_name.upcase}"
 				elsif @stack_name
-					header = "> #{@stack_name} "
+					title = "#{@stack_name}"
 				else
-					header = '> '
+					title = ''
 				end
 
 				if state == :ok
-					state_text = ''
+					color = ''
+				elsif state == :success
+					color = '#00FF00'
 				elsif state == :warning || state == :warn
-					state_text = 'WARN: '
+					color = '#FF7700'
 				elsif state == :error
-					state_text = 'ERROR: '
+					color = '#FF0000'
 				end
 
-				@context.reply "#{header}#{state_text}#{message}"
+				message = message.capitalize
+				chat_service = Lita::Robot.new.chat_service
+				fallback = title.empty? ? message : "#{title} - #{message}"
+
+				chat_service.send_attachment(@context.message.source.room_object, [{ title: title, color: color, fallback: fallback, text: message}])
+
+				@context.reply
 			end
 
 		end
