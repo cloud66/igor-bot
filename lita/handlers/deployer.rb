@@ -130,7 +130,7 @@ module Lita
 						deploy_status = get_deploy_status(redeployment_hook_url)
 						reply(:error, 'timed out after 10 minutes') and return if iterations > 30
 					end
-					reply(:ok, 'deployed')
+					reply(:success, 'deployed')
 				end
 			ensure
 				# always get rid of that redis key when done
