@@ -51,8 +51,8 @@ module Lita
 				context.reply '> Error: Use force OR wait, not both' and return if force && asap
 
 				stack_envs = ENV.keys.select { |stack_env| stack_env =~ /^#{stack_name}.*_hook/i }
-				context.reply "> Error: \"#{stack_name} stack not found" and return if stack_envs.nil? || stack_envs.empty?
-				context.reply "> Error: \"#{stack_name} results in more than one stack match" and return if stack_envs.size > 1
+				context.reply "> Error: \"#{stack_name}\" stack not found" and return if stack_envs.nil? || stack_envs.empty?
+				context.reply "> Error: \"#{stack_name}\" results in more than one stack match" and return if stack_envs.size > 1
 				stack_env = stack_envs.first
 				redeployment_hook_url = ENV.fetch(stack_env)
 
