@@ -3,6 +3,38 @@ require_relative('../extensions/boolean_extensions')
 
 module Lita
 	module Handlers
+
+		FUN_PREFIXES_POS = [
+			'Yes maaaster.',
+			'Okay, okaaay.',
+			'I\'m on it!',
+			'You\re the bossss!',
+			'Coming right up...',
+			'Ok fiiiine...'
+		]
+
+		FUN_PREFIXES_NEG = [
+			'No no no!',
+			'Uh uh can\'t do that!',
+			'Sorry maaaster!',
+			'Noooooooooo!',
+			'That\'s a negatory!',
+			'いいえ!'
+		]
+
+		FUN_SUFFIXES = [
+			'Hur hur hur',
+			'<hack> <cough> <cough> <splutter>',
+			'Oooh a rat! Darn, now I\'m hungry',
+			'Yay! Lightning! I\'ll get the kite',
+			'Got any spare body parts you\'re not using?',
+			'',
+			'',
+			'',
+			'',
+			''
+		]
+
 		class Deployer < Lita::Handler
 
 			WARNING_MOD = 10
@@ -178,21 +210,27 @@ module Lita
 					title = ''
 				end
 
-				if state == :ok
-					color = ''
-				elsif state == :success
-					color = '#00FF00'
+				if state == :success
+					color = 'good'
 				elsif state == :warning || state == :warn
-					color = '#FF7700'
+					color = 'warning'
 				elsif state == :error
-					color = '#FF0000'
+					color = 'danger'
+				else
+					color = ''
 				end
 
 				message = message.capitalize
-				chat_service = Lita::Robot.new.chat_service
-				fallback = title.empty? ? message : "#{title} - #{message}"
+				if @fun
+					prefix = [:success, :ok].include?(state) ? FUN_PREFIXES_POS.sample : FUN_PREFIXES_NEG.sample
+					suffix = FUN_SUFFIXES.sample
+					content = title.empty? ? message : "#{title} - #{prefix} #{message}. #{suffix}"
+				else
+					content = title.empty? ? message : "#{title} - #{message}"
+				end
 
-				chat_service.send_attachment(@context.message.source.room_object, [{ title: title, color: color, fallback: fallback, text: message}])
+				chat_service = Lita::Robot.new.chat_service
+				chat_service.send_attachment(@context.message.source.room_object, [{ title: content, color: color, fallback: content }])
 
 				@context.reply
 			end
