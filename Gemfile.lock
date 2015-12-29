@@ -55,5 +55,9 @@ PLATFORMS
 
 DEPENDENCIES
   httparty
+  json
   lita (~> 4.6.1)
   lita-slack (~> 1.7.1)
+
+BUNDLED WITH
+   1.10.6

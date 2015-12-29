@@ -1,61 +1,32 @@
 require 'httparty'
-require_relative('../extensions/boolean_extensions')
 
 module Lita
 	module Handlers
-
-		FUN_PREFIXES_POS = [
-			'Yes maaaster.',
-			'Okay, okaaay.',
-			'I\'m on it!',
-			'You\re the bossss!',
-			'Coming right up...',
-			'Ok fiiiine...'
-		]
-
-		FUN_PREFIXES_NEG = [
-			'No no no!',
-			'Uh uh can\'t do that!',
-			'Sorry maaaster!',
-			'Noooooooooo!',
-			'That\'s a negatory!',
-			'いいえ!'
-		]
-
-		FUN_SUFFIXES = [
-			'Hur hur hur',
-			'<hack> <cough> <cough> <splutter>',
-			'Oooh a rat! Darn, now I\'m hungry',
-			'Yay! Lightning! I\'ll get the kite',
-			'Got any spare body parts you\'re not using?',
-			'',
-			'',
-			'',
-			'',
-			''
-		]
-
-		class Deployer < Lita::Handler
+		class Deployer < AbstractHandler
 
 			WARNING_MOD = 10
 			DEPLOY_PREFIX = 'igor_deployer'
+
 			STAGING_WORKERS_URL = 'https://stage.cloud66.com/api/tooling/igor/sidekiq/stats.json'
 			PROD_STACK_CHECK_URL = 'https://app.cloud66.com/api/tooling/igor/stack_busy'
-			DEPLOY_REGEX = /\A\s*((?<force>force)\s|)(re|)deploy(\sme\s|\s)(?<stack_name>[a-z-_]+)(::(?<service_name>[a-z-_,]+)|)(\s(now|immediately)|\s(?<later>asap|soon|later)|)(\s(?<fun>(fun|with\sfun))|)\s*\z/i
-			STOP_REGEX = /\A(end|stop|cancel|quit|kill|terminate|end)\sdeploy(|ing|s|ment|ments)(\s(?<fun>(fun|with\sfun))|)\z/i
 
-			route(DEPLOY_REGEX, :do_deploy, command: true, help: { deployer: "deploy: Deploy!\nMore info here!" })
-			route(STOP_REGEX, :stop_deploy, command: true, help: { deployer: 'stop deploy: Stop all pending deploys!' })
+			DEPLOY_REGEX = /\A\s*((?<force>force)\s|)(re|)deploy(\sme\s|\s)(?<stack_name>[a-z\-_]+)(::(?<service_name>[a-z\-_,]+)|)(\s(now|immediately)|\s(?<later>asap|soon|later)|)(\s(?<fun>(fun|with\sfun))|)\s*\z/i
+			route(DEPLOY_REGEX, command: true, help: { deployer: "deploy: Deploy!\nMore info here!" }) do |context|
+				secure_method_invoker(context, method(:start_deploy))
+			end
+			STOP_REGEX = /\A(end|stop|cancel|quit|kill|terminate|end)\sdeploy(|ing|s|ment|ments)(\s(?<fun>(fun|with\sfun))|)\z/i
+			route(STOP_REGEX, command: true, help: { deployer: 'stop deploy: Stop all pending deploys!' }) do |context|
+				secure_method_invoker(context, method(:stop_deploy))
+			end
 
 			attr_accessor :fun,
-						  :context,
 						  :stack_name,
 						  :service_name
 
-			def do_deploy(context)
-				return unless context.message.command?
-
+			def start_deploy(context)
 				@context = context
+				return unless check_registration(@context)
+
 				match_data = DEPLOY_REGEX.match(@context.message.body)
 				@fun = !match_data[:fun].nil?
 				@stack_name = match_data[:stack_name]
@@ -67,9 +38,9 @@ module Lita
 			end
 
 			def stop_deploy(context)
-				return unless context.message.command?
-
 				@context = context
+				return unless check_registration(@context)
+
 				match_data = DEPLOY_REGEX.match(@context.message.body)
 				@fun = !match_data[:fun].nil?
 
@@ -200,7 +171,9 @@ module Lita
 				end
 			end
 
-			# state :ok, :warn:, :error
+			private
+
+			# state :success, :ok, :warn:, :error
 			def reply(state, message)
 				if @stack_name && @service_name
 					title = "#{@stack_name}::#{@service_name.upcase}"
@@ -222,7 +195,7 @@ module Lita
 
 				message = message.capitalize
 				if @fun
-					prefix = [:success, :ok].include?(state) ? FUN_PREFIXES_POS.sample : FUN_PREFIXES_NEG.sample
+					prefix = [:ok].include?(state) ? FUN_PREFIXES_POS.sample : FUN_PREFIXES_NEG.sample
 					suffix = FUN_SUFFIXES.sample
 					content = title.empty? ? message : "#{title} - #{prefix} #{message}. #{suffix}"
 				else
@@ -231,7 +204,6 @@ module Lita
 
 				chat_service = Lita::Robot.new.chat_service
 				chat_service.send_attachment(@context.message.source.room_object, [{ title: content, color: color, fallback: content }])
-
 				@context.reply
 			end
 
