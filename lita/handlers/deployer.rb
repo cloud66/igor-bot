@@ -66,10 +66,10 @@ module Lita
 					end
 				elsif stack.custom_active?
 					if wait
-						reply(title: 'Stack is busy! (Source: Custom URL Check)', color: Colors::ORANGE) and return
+						reply(title: 'Stack is busy! (Source: Custom URL)', color: Colors::ORANGE) and return
 
 					else
-						reply(title: 'Stack is busy! (Source: Custom URL Check)', color: Colors::ORANGE) and return
+						reply(title: 'Stack is busy! (Source: Custom URL)', color: Colors::ORANGE) and return
 						return
 					end
 				end
