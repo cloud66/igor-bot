@@ -1,4 +1,6 @@
 require 'httparty'
+require 'trollop'
+require 'shellwords'
 
 module Lita
 	module Handlers
@@ -7,33 +9,59 @@ module Lita
 
 			protected
 
-			def secure_method_invoker(context, lambda)
+			def secure_method_invoker(context, lambda, options_parser: nil)
 				@context = context
 				return unless @context.message.command?
 				unless Models::RegistrationManager.instance.is_registered?
-					message = "To authorize this Cloud 66 Slack-Bot\n\n1) Get your access token from #{Models::RegistrationManager::AUTH_URL}\n2) Run: #{robot.mention_name} register <access token>"
-					reply_core(title: 'Not Authorized!', color: :warning, message: message)
+					text = "To authorize this Cloud 66 Slack-Bot\n\n1) Get your access token from #{Models::RegistrationManager.instance.registration_url}\n2) Run: #{robot.mention_name} register --code <access token>"
+					fallback = 'Authorization required!'
+					reply(title: 'Not Authorized!', color: Colors::ORANGE, text: text, fallback: fallback)
 					return
 				end
-				lambda.call
+				method_invoker(lambda, options_parser)
 			end
 
-			def insecure_method_invoker(context, lambda)
+			def insecure_method_invoker(context, lambda, options_parser: nil)
 				@context = context
 				return unless @context.message.command?
-				lambda.call
+				method_invoker(lambda, options_parser)
 			end
 
-			def check_registration
-
+			# optional colors see: Colors
+			def reply(title: nil, color: '', text: nil, fallback: nil, fields: nil)
+				fallback = fallback || text || title
+				attachments = [
+					{
+						title: title,
+						text: text,
+						color: color,
+						fallback: fallback,
+					}
+				]
+				reply_raw(attachments)
 			end
 
-			# optional colors [:good, :warning, :danger]
-			def reply_core(title: nil, color: '', message: nil, fallback: nil)
-				fallback = fallback || message || title
+			def reply_raw(attachments)
 				chat_service = Lita::Robot.new.chat_service
-				chat_service.send_attachment(@context.message.source.room_object, [{ title: title, text: message, color: color, fallback: fallback }])
+				chat_service.send_attachment(@context.message.source.room_object, attachments)
 				@context.reply
+			end
+
+			private
+
+			def method_invoker(lambda, options_parser)
+				if options_parser
+					arguments = Shellwords.split(@context.message.body)
+					options = Trollop::with_standard_exception_handling p do
+						# raise Trollop::HelpNeeded if ARGV.empty? # show help screen
+						options_parser.parse(arguments)
+					end
+					lambda.call(options)
+				else
+					lambda.call
+				end
+			rescue => exc
+				reply(title: 'Error!', color: Colors::RED, text: exc.message, fallback: exc.message)
 			end
 		end
 	end

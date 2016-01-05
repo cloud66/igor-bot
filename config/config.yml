@@ -1,0 +1,7 @@
+stacks:
+#  - name: stack_name
+#    environment: stack_environment
+#    custom_activity_url: example_url that returns "{'response':{'is_currently_active':true|false}}" JSON
+  - name: staging
+    environment: staging
+    custom_activity_url: "https://stage.cloud66.com/api/tooling/is_currently_active.json"

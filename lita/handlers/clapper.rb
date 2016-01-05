@@ -7,7 +7,7 @@ module Lita
 			end
 
 			def clap
-				reply_core "clap clap clap clap clap... yes... you've got the clap now"
+				reply "clap clap clap clap clap... yes... you've got the clap now"
 			end
 		end
 
