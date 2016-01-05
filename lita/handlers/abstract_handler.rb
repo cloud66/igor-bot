@@ -36,6 +36,7 @@ module Lita
 						text: text,
 						color: color,
 						fallback: fallback,
+						mrkdwn_in: ['text']
 					}
 				]
 				reply_raw(attachments)

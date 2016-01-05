@@ -5,18 +5,19 @@ class Stack
 				  :last_activity,
 				  :environment,
 				  :framework,
-				  :cloud,
-				  :status
+				  :id,
+				  :status,
+				  :cloud
 
 	def initialize(stack_hash)
 		@name = stack_hash['name']
 		@last_activity = DateTime.parse(stack_hash['last_activity']) rescue nil
 		@environment = stack_hash['environment']
 		@framework = stack_hash['framework']
-		@cloud = stack_hash['cloud']
+		@id = stack_hash['uid']
 		@status = parse_status(stack_hash)
+		@cloud = stack_hash['cloud']
 	end
-
 
 	def last_activity_text
 		@last_activity.nil? ? 'none' : @last_activity.strftime('%Y-%m-%d %H:%M:%S')
@@ -38,9 +39,23 @@ class Stack
 			payload = params['response'] || params
 			keys = %w(is_currently_active is_busy busy is_active active is_working)
 			value = nil
-			keys.each{|k| value = payload[k] unless payload[k].nil? }
+			keys.each { |k| value = payload[k] unless payload[k].nil? }
 			raise "Unknown return value from request to custom-activity-url for #{@name} [#{@environment}] (\"#{custom_activity_url}\")" if value.nil?
 			return value.to_bool
+		end
+	end
+
+	def notify_color
+		if self.active?
+			return Colors::BLUE
+		elsif @status == :error
+			return Colors::RED
+		elsif @status == :unrecoverable
+			return Colors::BLACK
+		elsif @status == :impaired
+			return Colors::ORANGE
+		else
+			return Colors::GREEN
 		end
 	end
 
