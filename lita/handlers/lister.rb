@@ -6,10 +6,11 @@ module Lita
 		class Lister < AbstractHandler
 
 			LIST_REGEX = /\A(list|get|show|find|stacks)(\sstacks|\sall|\sall\sstacks|)/i
-			route(LIST_REGEX, command: true, help: { deployer: 'list: List!' }) do |context|
+			route(LIST_REGEX, command: true, help: { list: '_List your Stacks_' }) do |context|
 				secure_method_invoker(context, method(:handle_list), options_parser: Trollop::Parser.new {
-					opt :stack, 'Stack', type: :string
-					opt :environment, 'Environment', type: :string
+					banner '*Usage:* _list <options>_'
+					opt :stack, 'Stack', type: :string, short: 's'
+					opt :environment, 'Environment', type: :string, short: 'e'
 				})
 			end
 

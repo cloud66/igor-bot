@@ -53,13 +53,19 @@ module Lita
 			def method_invoker(lambda, options_parser)
 				if options_parser
 					arguments = Shellwords.split(@context.message.body)
-					options = Trollop::with_standard_exception_handling p do
-						# raise Trollop::HelpNeeded if ARGV.empty? # show help screen
-						options_parser.parse(arguments)
-					end
+					options = options_parser.parse(arguments)
 					lambda.call(options)
 				else
 					lambda.call
+				end
+
+			rescue Trollop::CommandlineError => exc
+				if options_parser
+					string_io = StringIO.new
+					options_parser.educate(string_io)
+					reply(color: Colors::ORANGE, text: string_io.string, fallback: string_io.string)
+				else
+					reply(title: 'Error!', color: Colors::RED, text: exc.message, fallback: exc.message)
 				end
 			rescue => exc
 				reply(title: 'Error!', color: Colors::RED, text: exc.message, fallback: exc.message)

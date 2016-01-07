@@ -19,15 +19,16 @@ module Models
 		end
 
 		def get_stack(id)
-			response = RegistrationManager.instance.access_token.get("#{API_URL}/stack/#{id}.json")
+			response = RegistrationManager.instance.access_token.get("#{API_URL}/stacks/#{id}.json?show_log=true")
 			stack_hash = JSON.parse(response.body)['response']
 			return Stack.new(stack_hash)
 		end
 
 		def deploy(id, service_names = [])
-			# response = RegistrationManager.instance.access_token.post("#{API_URL}/stack/#{id}.json")
-			# stack_hash = JSON.parse(response.body)['response']
-			# return Stack.new(stack_hash)
+			response = RegistrationManager.instance.access_token.post("#{API_URL}/stacks/#{id}/deployments.json")
+			hash = JSON.parse(response.body)['response']
+			deploy_started = !hash['queued']
+			return deploy_started
 		end
 
 	end

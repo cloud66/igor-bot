@@ -7,7 +7,9 @@ class Stack
 				  :framework,
 				  :id,
 				  :status,
-				  :cloud
+				  :is_busy,
+				  :cloud,
+				  :last_log
 
 	def initialize(stack_hash)
 		@name = stack_hash['name']
@@ -17,6 +19,8 @@ class Stack
 		@id = stack_hash['uid']
 		@status = parse_status(stack_hash)
 		@cloud = stack_hash['cloud']
+		@last_log = stack_hash['last_log']
+		@is_busy = stack_hash['is_busy']
 	end
 
 	def last_activity_text
@@ -24,7 +28,7 @@ class Stack
 	end
 
 	def active?
-		return @status == :active
+		return @is_busy || @status == :active
 	end
 
 	def custom_active?
