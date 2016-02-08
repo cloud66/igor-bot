@@ -1,5 +1,3 @@
-require 'httparty'
-
 class Stack
 	attr_accessor :name,
 				  :last_activity,
