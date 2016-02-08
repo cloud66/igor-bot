@@ -11,6 +11,7 @@ module Lita
 
 			def secure_method_invoker(context, lambda, options_parser: nil)
 				@context = context
+				@redis = redis
 				return unless @context.message.command?
 				unless Models::RegistrationManager.instance.is_registered?
 					text = "To authorize this Cloud 66 Slack-Bot\n\n1) Get your access token from #{Models::RegistrationManager.instance.registration_url}\n2) Run: #{robot.mention_name} register --code <access token>"
@@ -23,6 +24,7 @@ module Lita
 
 			def insecure_method_invoker(context, lambda, options_parser: nil)
 				@context = context
+				@redis = redis
 				return unless @context.message.command?
 				method_invoker(lambda, options_parser)
 			end
