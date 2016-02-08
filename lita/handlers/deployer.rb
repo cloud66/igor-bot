@@ -62,7 +62,7 @@ module Lita
 
 				status = get_local_status(stack)
 				if [:queued, :deploying, :cancelling].include?(status)
-					reply(text: "#{header(stack, services)} Already #{status.capitalize}", color: Colors::ORANGE)
+					reply(text: "#{header(stack, services)} already #{status}", color: Colors::ORANGE)
 					return
 				end
 
