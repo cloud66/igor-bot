@@ -40,18 +40,18 @@ module Lita
 
 				if stack.active?
 					if wait
-						reply(text: '*Stack is busy* (source: _Cloud 66_) - waiting', color: Colors::GREEN)
+						reply(text: '*Stack is busy* (_Cloud 66_) - queued for deploy', color: Colors::GREEN)
 						wait_for_stack(stack)
 					else
-						reply(text: '*Stack is busy* (source: _Cloud 66_)', color: Colors::ORANGE) and return
+						reply(text: '*Stack is busy* (_Cloud 66_)', color: Colors::ORANGE) and return
 						return
 					end
 				elsif stack.custom_active?
 					if wait
-						reply(text: '*Stack is busy* (source: _custom url_)', color: Colors::GREEN)
+						reply(text: '*Stack is busy* (_custom url_) - queued for deploy', color: Colors::GREEN)
 						wait_for_stack(stack)
 					else
-						reply(text: '*Stack is busy* (source: _custom url_)', color: Colors::ORANGE) and return
+						reply(text: '*Stack is busy* (_custom url_)', color: Colors::ORANGE) and return
 						return
 					end
 				end
@@ -83,7 +83,7 @@ module Lita
 					stack = wait_for_stack(stack)
 					reply(text: "*#{stack.name}:* Deploy complete", color: stack.notify_color)
 				else
-					reply(text: "*#{stack.name}:* Deploy was enqueued (as another deploy had started); unable to track status", color: Colors::ORANGE)
+					reply(text: "*#{stack.name}:* Deploy was enqueued at Cloud 66 (as another deploy had just started); unable to track status", color: Colors::ORANGE)
 				end
 			end
 		end
