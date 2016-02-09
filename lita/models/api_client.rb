@@ -36,10 +36,10 @@ module Models
 
 		def deploy(id, services)
 			url = "#{API_URL}/stacks/#{id}/deployments.json"
-			query_string = services.map{|service| "services=#{CGI.escape(service)}"}.join('&')
-			url = "#{url}?#{query_string}" unless query_string.empty?
 
-			response = RegistrationManager.instance.access_token.post(url)
+			# query_string = services.map { |service| "services=#{CGI.escape(service)}" }.join('&')
+			# url = "#{url}?#{query_string}" unless query_string.empty?
+			response = RegistrationManager.instance.access_token.post(url, { body: { services: services } })
 			hash = JSON.parse(response.body)['response']
 			deploy_started = !hash['queued']
 			return deploy_started
