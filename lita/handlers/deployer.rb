@@ -4,7 +4,6 @@ require 'json'
 module Lita
 	module Handlers
 		class Deployer < AbstractHandler
-
 			WAIT_CHECK_FREQ = 30 # 30 seconds
 			WAIT_TIMEOUT = 60 * 60 # 1 hour
 
