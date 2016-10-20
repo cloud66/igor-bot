@@ -1,4 +1,5 @@
 require 'httparty'
+require 'json'
 
 module Lita
 	module Handlers
@@ -6,6 +7,14 @@ module Lita
 
 			WAIT_CHECK_FREQ = 30 # 30 seconds
 			WAIT_TIMEOUT = 60 * 60 # 1 hour
+
+
+
+
+
+			on(:unhandled_message) do |context|
+				secure_method_invoker(context, method(:handle_wrong_command))
+			end
 
 			DEPLOY_REGEX = /\A\s*(re|)deploy(\sme|)/i
 			route(DEPLOY_REGEX, command: true, help: { deploy: '_Deploy your Stacks_' }) do |context|
@@ -21,8 +30,10 @@ module Lita
 			route(CANCEL_REGEX, command: true, help: { cancel: '_Cancel your Queued Deploys_' }) do |context|
 				secure_method_invoker(context, method(:handle_cancel), options_parser: Trollop::Parser.new {
 					banner '*Usage:* _cancel <options>_'
-					opt :stack, 'Stack name', type: :string, short: 's'
-					opt :environment, 'Environment', type: :string, short: 'e'
+          opt :stack, 'Stack name', type: :string, short: 's'
+          opt :environment, 'Environment', type: :string, short: 'e'
+          opt :services, 'Services (multiple allowed)', type: :string, multi: true, short: 'v'
+          opt :wait, 'Wait for the stack to become available (if it is busy)', default: true
 				})
 			end
 
@@ -41,6 +52,13 @@ module Lita
 				raise Trollop::CommandlineError.new if stack_name.nil? || stack_name.empty?
 				prepare_for_cancel(stack_name, environment)
 			end
+
+
+			def handle_wrong_command(options = {})
+        text = "Sorry, I don’t understand this command! \"#{command_from_message}\"\nPlease try one of the following: *deploy*, *cancel*, *list*!"
+        reply(title: "Unknown command", color: Colors::ORANGE, text: text, fallback: string_io.string)
+			end
+
 
 			private
 
