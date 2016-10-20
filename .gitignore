@@ -1,5 +1,5 @@
 .idea/igor-bot.iml
 .idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
 .idea/workspace.xml
+.idea/runConfigurations/igor.xml
+.slack-bot-auth.json
