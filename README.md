@@ -7,89 +7,66 @@ A Bot To Deploy Your Stacks
 
 ### <a href="#welcome-to-github-pages" id="welcome-to-github-pages" class="anchor"><span class="octicon octicon-link"></span></a>Welcome to igor-bot
 
-Igor is a custom Cloud66's tool. It is a slack bot able to operate on your stacks with commands such as `deploy` or `cancel`.
+Igor is a custom Cloud66's tool. It is a slack bot able to operate on your stacks with commands such as `deploy` or `cancel` or `list`.
 
-#### Build files
+#### Install igor-bot
 
-Habitus uses a yml file as a descriptor for builds. Here is an example:
+Bla. Here is an example:
 
-``` yaml
-  
-build:
-  version: 2016-02-13 // version of the build schema. 
-  steps:
-    - builder:
-      name: builder
-      dockerfile: Dockerfile.builder
-      artifacts:
-        - /go/src/github.com/cloud66/iron-mountain/iron-mountain
-        - /go/src/github.com/cloud66/iron-mountain/config.json
-        - /go/src/github.com/cloud66/iron-mountain/localhost.crt
-        - /go/src/github.com/cloud66/iron-mountain/localhost.key
-      cleanup:
-        commands:
-          - rm -rf /root/.ssh/
-    - deployment:
-      name: ironmountain
-      dockerfile: Dockerfile.deployment
-      depends_on:
-        - builder
-    - uploader:
-      name: uploader
-      dockerfile: Dockerfile.uploader
-      depends_on:
-        - ironmountain
-      command: s3cmd --access_key=_env(ACCESS_KEY) --secret_key=_env(SECRET_KEY) put /app/iron-mountain s3://uploads.aws.com
-  
+``` 
+bla
 ```
+#### Register
 
-Build files can be made up of multiple steps. Each step is independent of the other ones and downstream steps can use upstream ones as source (in `FROM` command).
 
-In the example above, there are three steps: `builder`, `deployment` and `uploader`. All steps work out of the same working directory. `dockerfile` states which Dockerfile is used to build this step.
+#### Commands
+
+The commands are the key word we are adressing to igor so that he can do the rigth operations. To give him an order you must call him by his name then enter one of the following commands.
+
+Here is an exemple :
+
+`igor deploy -s my-stack-name`
 
 Here is a list of all step elements:
 
--   `name:` Name of the generated image
--   `dockerfile:` Dockerfile used to build the step
--   `artifacts:` List of all files to be copied out of the image once it’s built. See below
--   `cleanup:` List of all cleanup steps to run on the image once the step is finished. See below
--   `depends_on:`Lists all the steps this step depends on (and should be built prior to this step’s build)
--   `command:`A command that will run in the running container after it’s built
+-   `deploy` | `redeploy` : Deploy the specified stack.
+-   `cancel` | `stop` | `exit` | `halt` : Cancel the specifield stack.
+-   `register` | `authorize` | `auth` : Try to register to your Cloud 66 account with the specified token.
+-   `deregister` | `deauthorize` | `deauth` : Deregister igor from your Cloud 66 account
+-   `list` | `get` | `show` | `find` | `stacks` : List all the stacks or a specified one.
 
-#### Artifacts
-
-Artifacts are files to be copied outside of a build image in a step. This can be used when a step is build of a compiled language like Go or Java where the image requires build dependencies. The next step can then use the build step’s artifacts in a runtime dependency only image.
-
-Each artefact has two parts: source and destination. Source is the path from within the image and destination where the file will be copied to on the “build server”. If destination is missing, the current folder will be used. Full path and file permissions of the source will be preserved during copy. So a file that comes from `/app/build/result/abc` of the image will go to `./app/build/result/abc` of the build server if no destination is set.
+Commands you are giving to igor may accept or need options. In the next part we will see the options for each commands. If you miss spell or try to use a wrong option, igor will respond with a usage message corresponding to the command you tried to use, if the usage message is not enough you may find an answer with the help option.
 
 Here is an example:
 
-` - /go/src/service/go-service`
+`igor deploy -h`
 
-or
+To specify an environment you need to use the `-e` option followed by the full name of the environment.
+To specify a stack you need to use the `-s` option followed by the full name of the stack.
+To specify a service you need to use the `-v` option followed by the full name of the environment.
 
-`- /go/src/service/go-service:/tmp/go-service`
-updat
-Artifacts are copied from the container and can be used with `ADD` or `COPY` commands in downstream steps. Habitus copies artefact file permissions as well.
+Here is an example of the docker service in the stack `my-stack-name` from production environment:
 
-Here is an example that uses an artefact generated in step `builder`
+`igor deploy -e production -s my-stack-name -v docker`
 
-      
-        FROM ubuntu
-        ADD ./iron-mountain /app/iron-mountain
-      
+or 
+
+`igor deploy -v docker -e production -s my-stack-name`
+
+#### Deploy
+
+The deploy command is the best alternative to deploy your stacks. Instead of going on your Cloud 66 account and redploy you stack you will be able to directly do it from Slack. The deploy command may only work if you provide the exact name of an existing stack. You will be warn if the stack you specified dosen't exist.
+
+Here is an exemple :
+
+`-igor deploy -s my-stack-name`
+
+
+
 
 #### Cleanup
 
 Cleanup is a step that runs after the build is finished for a step. At the moment, cleanup is limited to commands:
-
-      
-    cleanup:
-      commands:
-        - apt-get purge -y man  perl-modules vim-common vim-tiny libpython3.4-stdlib:amd64 python3.4-minimal xkb-data libx11-data eject python3 locales golang-go
-        - apt-get clean autoclean
-        - apt-get autoremove -y
-        - rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 This runs the commands in the provided order on the image and then as a last step squashes the image to remove anything that’s been removed. This is particularly useful when it comes to private information like ssh private keys that need to be on the image during the build (to pull git repos for example) but can’t be published as part of the built image.
 
