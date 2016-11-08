@@ -1,13 +1,20 @@
+# igor-bot
+Igor is a custom Cloud 66 tool. It is a slack bot able to operate on your stacks. You will be able to manage your stacks directly through Slack. It means you can display the state of your stacks, deploy them and cancel them with simple commands such as `list` , `deploy` and `cancel`.
 
-igor-bot
-=======
+![Codeship Status for cloud66/habitus](https://codeship.com/projects/714284d0-e914-0133-1e5d-4eaa3299b296/status)
 
-A Bot To Deploy Your Stacks
-------------------------
+- Website: http://www.igor-bot.io/
+- [Download Igor](https://github.com/cloud66/habitus/releases?utm_source=Githubdownload&utm_medium=GHDpage&utm_campaign=habitus)
+- Slack Channel: https://cloud66ers.slack.com/messages/igor-bot/
+- Articles: http://blog.cloud66.com/tag/igor-bot/ 
 
-### <a href="#welcome-to-github-pages" id="welcome-to-github-pages" class="anchor"><span class="octicon octicon-link"></span></a>Welcome to igor-bot
-
-Igor is a custom Cloud66's tool. It is a slack bot able to operate on your stacks with commands such as `deploy` or `cancel` or `list`.
+### Key features:
+__________________________________________________________________
+- Open Source project
+- Manage you Cloud 66 stacks from Slack
+- Allows you to deploy specififc services from specific stacks
+- Allows you to cancel deploying stacks
+- Allows you to display the state of your stacks for you or your team
 
 #### Install igor-bot
 
@@ -17,7 +24,7 @@ bla
 ```
 #### Register
 
-Once you have invited igor-bot to yout chat you may try to any command so that he will answer by inviting you to register to a cloud 66 link. Register with your Cloud 66 account and then this time use the token to register through Slack.
+Once you have invited igor-bot to yout chat you may try any command so that he will answer by inviting you to log in your Cloud 66 accout. Register with your Cloud 66 account and then this time use the token to register through Slack.
 
 Here is an exemple :
 
