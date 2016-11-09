@@ -1,5 +1,5 @@
-# igor-bot
-Igor is a custom Cloud 66 tool. It is a slack bot able to operate on your stacks. You will be able to manage your stacks directly through Slack. It means you can display the state of your stacks, deploy them and cancel them with simple commands such as `list` , `deploy` and `cancel`.
+# RoboChat
+RoboChat is an open source Slack-bot, build by [Cloud 66](http://www.cloud66.com/?utm_source=gh&utm_medium=ghp&utm_campaign=robochat). It is your very own personal-assistant that operates on your stacks directly from the Slack chat window. Now, you can display the state of your stacks, deploy them and cancel them with simple commands such as `list` , `deploy` and `cancel`.
 
 ![Codeship Status for cloud66/habitus](https://codeship.com/projects/714284d0-e914-0133-1e5d-4eaa3299b296/status)
 
@@ -10,18 +10,18 @@ Igor is a custom Cloud 66 tool. It is a slack bot able to operate on your stacks
 
 ### Key features:
 __________________________________________________________________
-- Open Source project
-- Manage you Cloud 66 stacks from Slack
-- Allows you to deploy specififc services from specific stacks
+- Open Source project 
+- Easy to customise to your work-flow
+- Manage your Cloud 66 stacks from Slack
+- Allows you to deploy specific services from specific stacks
 - Allows you to cancel deploying stacks
 - Allows you to display the state of your stacks for you or your team
 
-### Install Igor:
+### Quick Start:
 __________________________________________________________________
-Bla. Here is an example:
-``` 
-bla
-```
+#### Download
+
+`To complete`
 
 #### Register
 
@@ -33,9 +33,15 @@ Here is an exemple :
 
 Igor is now operationnal.
 
-### Quick start:
+### Developing RoboChat:
 __________________________________________________________________
-#### Commands
+
+`To complete`
+…… If you wish to work on the Igor project itself……….. 
+
+
+### Documentation:
+__________________________________________________________________
 
 The commands are the key words we are adressing to igor so that he can do the rigth operations. To give him an order you must call him by his name and then enter one of the following commands.
 
