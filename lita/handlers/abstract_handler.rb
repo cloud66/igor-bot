@@ -1,6 +1,8 @@
 require 'httparty'
 require 'trollop'
 require 'shellwords'
+require 'i18n'
+
 
 module Lita
 	module Handlers
@@ -14,8 +16,8 @@ module Lita
 				@context = context
 				return unless message_from_context().command?
 				return if self.robot.mention_name == message_from_context.user.mention_name
-				unless Models::RegistrationManager.instance.is_registered?
-					text = "To authorize this Cloud 66 Slack-Bot\n\n1) Get your access token from #{Models::RegistrationManager.instance.registration_url}\n2) Run: #{robot.mention_name} register --code <access token>"
+				unless ::Models::RegistrationManager.instance.is_registered?
+					text = "To authorize this Cloud 66 Slack-Bot\n\n1) Get your access token from #{::Models::RegistrationManager.instance.registration_url}\n2) Run: #{robot.mention_name} register --code <access token>"
 					fallback = 'Authorization required!'
 					reply(title: 'Not Authorized!', color: Colors::ORANGE, text: text, fallback: fallback)
 					return
@@ -25,7 +27,8 @@ module Lita
 
 			def insecure_method_invoker(context, lambda, options_parser: nil)
 				@redis = redis
-				return unless message_from_context.command?
+				@context = context
+				return unless message_from_context().command?
 				method_invoker(lambda, options_parser)
 			end
 
@@ -46,16 +49,17 @@ module Lita
 			end
 
 			def reply_raw(attachments)
-				chat_service = Lita::Robot.new.chat_service
+				# robot.send_messages(message_from_context.source, attachments)
+				chat_service = robot.chat_service
 				chat_service.send_attachment(message_from_context().source.room_object, attachments)
-				reply_from_context()
+				# reply_from_context()
 			end
 
 			private
 
 			def method_invoker(lambda, options_parser)
 				if options_parser
-					arguments = Shellwords.split(message_from_context().body)
+					arguments = Shellwords.split(handle_slack_quotes(message_from_context().body))
 					options = options_parser.parse(arguments)
 					lambda.call(options)
 				else
@@ -71,15 +75,24 @@ module Lita
 					reply(title: 'Error!', color: Colors::RED, text: exc.message, fallback: exc.message)
 				end
 			rescue => exc
-				if exc.is_a?(Trollop::HelpNeeded) && command_from_message == "deploy"
+ 				if exc.is_a?(Trollop::HelpNeeded) && ["deploy", "redeploy"].include?(command_from_message)
 					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "bla bla deploy", fallback: exc.message)
-				elsif exc.is_a?(Trollop::HelpNeeded) && command_from_message == "list"
-					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "bla bla list", fallback: exc.message)
-				elsif exc.is_a?(Trollop::HelpNeeded) && command_from_message == "cancel"
+				elsif exc.is_a?(Trollop::HelpNeeded) && ["stop", "cancel", "exit", "halt"].include?(command_from_message)
 					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "bla bla cancel", fallback: exc.message)
+				elsif exc.is_a?(Trollop::HelpNeeded) && ["list", "get", "show", "find"].include?(command_from_message)
+					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "bla bla list", fallback: exc.message)
 				else
 					reply(title: "Error", color: Colors::RED, text: exc.message, fallback: exc.message)
 				end
+			end
+
+			def handle_slack_quotes(message)
+				wrong_quotes1 = '“'
+				wrong_quotes2 = '”'
+				wrong_quotes1.force_encoding 'UTF-8'
+				wrong_quotes2.force_encoding 'UTF-8'
+				message.gsub(wrong_quotes1,'"')
+				return message.gsub(wrong_quotes2,'"')
 			end
 
 			def message_from_context()
@@ -90,13 +103,13 @@ module Lita
 				end
 			end
 
-			def reply_from_context()
-				if @context.respond_to?(:reply)
-					@context.reply
-				elsif @context.is_a?(Hash) && context[:reply]
-					@context[:reply]
-				end
-			end
+			# def reply_from_context()
+			# 	if @context.respond_to?(:reply)
+			# 		@context.reply
+			# 	elsif @context.is_a?(Hash) && context[:reply]
+			# 		@context[:reply]
+			# 	end
+			# end
 
 			def command_from_message()
 				Shellwords.split(message_from_context().body).first

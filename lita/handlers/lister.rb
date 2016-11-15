@@ -5,7 +5,8 @@ module Lita
 	module Handlers
 		class Lister < AbstractHandler
 
-			LIST_REGEX = /\A(list|get|show|find|stacks)(\sstacks|\sall|\sall\sstacks|)/i
+			#LIST_REGEX = /\A(list|get|show|find|stacks)(\sstacks|\sall|\sall\sstacks|)/i
+			LIST_REGEX = /\A(list|get|show|find)(\sstacks|\sall\sstacks|\sall|\s\-\D|\z)/i
 			route(LIST_REGEX, command: true, help: { list: '_List your Stacks_' }) do |context|
 				secure_method_invoker(context, method(:handle_list), options_parser: Trollop::Parser.new {
 					banner '*Usage:* _list <options>_'
@@ -18,7 +19,6 @@ module Lita
 				client = Models::ApiClient.new
 				stacks = client.get_stacks(stack_name: options[:stack], environment: options[:environment])
 				reply(title: 'No matching stacks') if stacks.empty?
-
 				attachments = []
 				stacks.each do |stack|
 					attachments << {

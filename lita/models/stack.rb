@@ -61,6 +61,23 @@ class Stack
 		end
 	end
 
+	def get_local_status(prefix)
+		deploy_key = "#{prefix}:#{self.name}:#{self.environment}"
+		status = Lita.redis.get(deploy_key)
+		return :none if status.nil?
+		return status.to_sym
+	end
+
+	# deployer status list [:none, :deploying, :queued, :cancelling]
+	def set_local_status(prefix, timeout, status)
+		deploy_key = "#{prefix}:#{self.name}:#{self.environment}"
+		if status == :none
+			Lita.redis.del(deploy_key)
+		else
+			Lita.redis.setex(deploy_key, timeout, status)
+		end
+	end
+
 	private
 
 	def parse_status(stack_hash)

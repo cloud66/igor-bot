@@ -2,7 +2,7 @@ module Lita
 	module Handlers
 		class Registrar < AbstractHandler
 
-			REGISTER_REGEX = /\A(register|authorize|auth)/i
+			REGISTER_REGEX = /\A(register|authorize|auth)(\s\-\D|\z)/i
 			route(REGISTER_REGEX, command: true, help: { register: '_Authorize the Cloud 66 Slack-Bot_' }) do |context|
 				insecure_method_invoker(context, method(:handle_register), options_parser: Trollop::Parser.new {
 					banner '*Usage:* _register <options>_'
@@ -10,7 +10,7 @@ module Lita
 				})
 			end
 
-			DEREGISTER_REGEX = /\A(deregister|de-register|deauthorize|de-authorize|deauth|de-auth)\z/i
+			DEREGISTER_REGEX = /\A(deregister||deauthorize||deauth)(\s\-\D|\z)\z/i
 			route(DEREGISTER_REGEX, command: true, help: { deregister: '_De-Authorize the Cloud 66 Slack-Bot_' }) do |context|
 				secure_method_invoker(context, method(:handle_deregister))
 			end
