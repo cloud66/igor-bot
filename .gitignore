@@ -3,3 +3,4 @@
 .idea/workspace.xml
 .idea/runConfigurations/igor.xml
 .slack-bot-auth.json
+.slack-bot-test-auth.json
