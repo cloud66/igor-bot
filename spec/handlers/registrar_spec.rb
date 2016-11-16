@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../spec_helper.rb'
 
 describe Lita::Handlers::Registrar, lita_handler: true, additional_lita_handlers: [Lita::Handlers::AbstractHandler] do
 

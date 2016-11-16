@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../spec_helper.rb'
 
 def is_registered?
   return true if @@need_to_always_be_registered == true
