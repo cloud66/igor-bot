@@ -19,15 +19,29 @@ __________________________________________________________________
 
 ### Quick Start:
 __________________________________________________________________
-#### Download
+#### Create a Slack bot
 
-`To complete`
+First thing you will need to do is to create your ChatOps bot on Slack.
+-Go to `https://you_slack_team.slack.com/apps/manage/custom-integrations` 
+-Go to `Bots`
+-Go to `Add Configuration`
+-Choose the name of your bot, the name will be required before each commands
+-Save the token for later
+
+#### Download the app
+
+Then you must install the ChatOps app from the Cloud66's app store
+-Go to ` https://app.cloud66.com/easydeploys`
+-Install the `ChatOps` app
+-Set the `SLACK_TOKEN` variable environment with the token of the slack bot you just created
+-Deploy the stack, the fields are already filled
 
 #### Register
 
-Once you have invited igor-bot to your chat you may try any command (like `igor list`) so that he will answer by inviting you to log in your Cloud 66 accout. Register with your Cloud 66 account and then this time use the token to register through Slack.
+Now you can invite you bot to any slack channels you want : `/invite @bot_name`
+Once you have invited igor-bot to your chat you may try any command (such as `igor list`) so that he will answer by inviting you to log in your Cloud 66 accout. Register with your Cloud 66 account and use the token to register through Slack.
 
-Here is an exemple :
+Here is the register command :
 
 `igor register -c token`
 
