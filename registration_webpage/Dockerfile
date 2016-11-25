@@ -4,7 +4,7 @@ VOLUME /opt/chat-ops-common
 
 RUN mkdir /opt/igor-bot-registration
 WORKDIR /opt/igor-bot-registration
-ADD . /opt/igor-bot-registration
+ADD ./registration_webpage /opt/igor-bot-registration
 EXPOSE 8080
 
 RUN npm install
