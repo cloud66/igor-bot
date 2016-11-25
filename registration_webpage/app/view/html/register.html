@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <style>
+    .box{
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 15px;
+      display: inline-block;
+    }
+    </style>
+  </head>
+  <div class="body-register"
+    <h3>Welcome to RoboChat<h3>
+      <p>Hello, I am Igor and I am not authorized yet.</p>
+    <div class="box">
+      <form action="http://localhost:8080/register/oauth" method="POST">
+        <input type="submit" value="Get my c66 token">
+      </form>
+      <form action="http://localhost:8080/register" method="POST">
+        <h5>1) Create a slack bot<h5>
+          <p><a href="https://your_team.slack.com/apps/manage/custom-integrations">https://your_team.slack.com/apps/manage/custom-integrations</a></p>
+          <p>Go to Bots</p>
+          <p>Create a bot and forward us the token :</p>
+          <p>Insert the following Slack Token</p>
+          <input type="text" name="slackToken">
+        <h5>2) Authorize on Cloud 66<h5>
+          <p>Enter your Cloud 66 token :</p>
+          <input type="text" name="c66Token"><br>
+          <input type="submit" value="Authorize the bot">
+      </form>
+
+
+    </div>
+  </div>
+</html>
