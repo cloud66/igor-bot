@@ -17,7 +17,7 @@ module Lita
 				return unless message_from_context().command?
 				return if self.robot.mention_name == message_from_context.user.mention_name
 				unless ::Models::RegistrationManager.instance.is_registered?
-					text = "To authorize this Cloud 66 Slack-Bot\n\n1) Get your access token from #{::Models::RegistrationManager.instance.registration_url}\n2) Run: #{robot.mention_name} register --code <access token>"
+					text = "To authorize this Cloud 66 Slack-Bot\n\n -Go the registration web page of your personnal bot"
 					fallback = 'Authorization required!'
 					reply(title: 'Not Authorized!', color: Colors::ORANGE, text: text, fallback: fallback)
 					return

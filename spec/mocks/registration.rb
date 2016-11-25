@@ -1,5 +1,6 @@
 class Models::RegistrationManager
-  TOKEN_LOCATION = "#{APP_ROOT_PATH}/config/.slack-bot-test-auth.json"
+  #TOKEN_LOCATION = "#{APP_ROOT_PATH}/config/.slack-bot-test-auth.json"
+  TOKEN_LOCATION = "/opt/chat-ops-common/c66-token.json"
   APP_UID = "TEST UID"
   APP_SECRET = "TEST SECRET"
 

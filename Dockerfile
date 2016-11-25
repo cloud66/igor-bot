@@ -1,8 +1,10 @@
 FROM litaio/ruby:2.2.2
 
+VOLUME /opt/chat-ops-common
+
 RUN mkdir /opt/lita
+RUN chmod u=rwx /opt/lita
 WORKDIR /opt/lita
-VOLUME /opt/lita
 
 RUN echo "gem: --no-ri --no-rdoc" > /.gemrc && \
     gem install bundler
@@ -10,4 +12,4 @@ RUN echo "gem: --no-ri --no-rdoc" > /.gemrc && \
 ADD . /opt/lita
 RUN bundle install
 
-CMD lita start
+CMD ./hold_lita.sh
