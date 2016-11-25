@@ -29,11 +29,11 @@ router.post('/', function(req, res){
   });
 
   fs.stat('/opt/chat-ops-common/is-token.txt', function (err, stats) {
-   if (err) res.redirect('localhost:8080')
+   if (err) res.redirect('/')
    else{
      fs.unlink('/opt/chat-ops-common/is-token.txt',function(err){
-       if(err) res.redirect('localhost:8080')
-       else res.redirect('localhost:8080')
+       if(err) res.redirect('/')
+       else res.redirect('/')
      });
     }
    });
@@ -58,7 +58,7 @@ router.post('/deregister', function(req, res){
           if (err) return console.error(err);
          fs.unlink('/opt/chat-ops-common/c66-token.json',function(err){
              if(err) return console.log(err);
-             res.redirect('localhost:8080')
+             res.redirect('/')
          });
       });
     });
