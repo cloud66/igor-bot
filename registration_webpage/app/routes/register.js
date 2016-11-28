@@ -51,7 +51,7 @@ router.post('/deregister', function(req, res){
       if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
       fs.unlink('/opt/chat-ops-common/slack-token.txt',function(err){
           if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
-          fs.stat('./server/upload/my.csv', function (err, stats) {
+          fs.stat('/opt/chat-ops-common/c66-token.json', function (err, stats) {
             if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
             fs.unlink('/opt/chat-ops-common/c66-token.json',function(err){
                if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
