@@ -38,20 +38,17 @@ Then you must install the ChatOps app from the Cloud66's app store
 
 #### Register
 
-Now you can invite your bot to any slack channels from your team you want : `/invite @bot_name`
-Once you have invited igor-bot to your chat you may try any command (such as `igor list`) so that he will answer by inviting you to log in your Cloud 66 accout. Register with your Cloud 66 account and use the token to register through Slack.
+Once you have filled the registration page you can invite your bot to any slack channels from your team you want : `/invite @bot-name`.
+Now that your bot has been invited to your chat you may try any command (such as `bot-name list`).
 
-Here is the register command :
+#### Deregister
 
-`igor register -c token`
-
-Igor is now operationnal.
+You may want to remove your bot, if so you just have to go to the registration page from the `Browse` of your ChatOps container and then clic on deregister. You will need to redeploy the stack for this to take effect.
 
 ### Developing RoboChat:
 __________________________________________________________________
 
-`To complete`
-…… If you wish to work on the Igor project itself……….. 
+If you wish to work on the project itself, don't worry ChatOps is open source!
 
 
 ### Documentation:
