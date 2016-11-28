@@ -4,7 +4,7 @@ var register = require('./app/routes/register.js');
 var fs = require('fs');
 var app = express();
 
-const PORT = 80;
+const PORT = 8080;
 
 var path = require('path');
 
