@@ -48,9 +48,7 @@ module Models
 				client = OAuth2::Client.new(APP_UID, APP_SECRET, :site => 'https://stage.cloud66.com')
 				self.access_token = OAuth2::AccessToken.new(client, config[:local_token])
 				if File.exist?("/opt/chat-ops-common/is-token.txt")
-					puts('exit')
 				else
-					puts('dont exist')
 					set_token_info(local_token)
 				end
 			end
