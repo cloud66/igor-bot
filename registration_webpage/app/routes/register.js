@@ -37,11 +37,6 @@ router.post('/', function(req, res){
      });
     }
    });
-  //This doesn't work server side
-  // open(authorizationUri, function (err) {
-  //   if ( err ) throw err;
-  //   res.redirect('http://localhost:8080');
-  // });
 });
 
 
@@ -51,14 +46,20 @@ router.post('/oauth', function(req, res){
 
 router.post('/deregister', function(req, res){
    fs.stat('/opt/chat-ops-common/slack-token.txt', function (err, stats) {
-    if (err) return console.error(err);
+    if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
     fs.unlink('/opt/chat-ops-common/slack-token.txt',function(err){
-        if(err) return console.log(err);
+        if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
         fs.stat('./server/upload/my.csv', function (err, stats) {
-          if (err) return console.error(err);
-         fs.unlink('/opt/chat-ops-common/c66-token.json',function(err){
-             if(err) return console.log(err);
-             res.redirect('/')
+          if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
+          fs.unlink('/opt/chat-ops-common/c66-token.json',function(err){
+          if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
+              fs.stat('/opt/chat-ops-common/is-token.txt', function (err, stats) {
+                  if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
+                    fs.unlink('/opt/chat-ops-common/is-token.txt',function(err){
+                     if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
+                        res.redirect('/')
+               });
+            });
          });
       });
     });

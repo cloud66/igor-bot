@@ -18,12 +18,12 @@ app.use('/register', register);
 app.use('/file', file);
 
 app.get('/', function(req, res) {
-  fs.readFile('app/mock/one.txt', 'utf8', function (err,data) {
+  fs.readFile('/opt/chat-ops-common/c66-token.json', 'utf8', function (err,data) {
     if (err) res.sendFile(__dirname + '/app/view/html/register.html');
     else{
-      fs.readFile('app/mock/two.txt', 'utf8', function (err,data) {
+      fs.readFile('opt/chat-ops-common/slack-token.txt', 'utf8', function (err,data) {
         if (err) res.sendFile(__dirname + '/app/view/html/register.html');
-        else res.sendfile(__dirname + '/app/view/html/success.html')
+        else res.sendfile(__dirname + '/app/view/html/success.html');
       });
     }
   });
