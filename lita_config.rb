@@ -10,7 +10,6 @@ Lita.configure do |config|
 	config.redis[:host] = ENV['REDIS_HOST'] || ENV['REDIS_ADDRESS'] || 'localhost'
 	config.redis[:port] = ENV['REDIS_PORT'] || 6379
 	config.robot.adapter = :slack
-  config.http.port = 8080
   if(config.adapters.respond_to?(:slack))
    config.adapters.slack.token = (File.read("/opt/chat-ops-common/slack-token.txt")).to_s
   end
