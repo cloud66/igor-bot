@@ -76,11 +76,11 @@ module Lita
 				end
 			rescue => exc
  				if exc.is_a?(Trollop::HelpNeeded) && ["deploy", "redeploy"].include?(command_from_message)
-					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "bla bla deploy", fallback: exc.message)
+					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "Refer to the documentation", fallback: exc.message)
 				elsif exc.is_a?(Trollop::HelpNeeded) && ["stop", "cancel", "exit", "halt"].include?(command_from_message)
-					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "bla bla cancel", fallback: exc.message)
+					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "Refer to the documentation", fallback: exc.message)
 				elsif exc.is_a?(Trollop::HelpNeeded) && ["list", "get", "show", "find"].include?(command_from_message)
-					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "bla bla list", fallback: exc.message)
+					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "Refer to the documentation", fallback: exc.message)
 				else
 					reply(title: "Error", color: Colors::RED, text: exc.message, fallback: exc.message)
 				end
