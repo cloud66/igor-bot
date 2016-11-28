@@ -11,9 +11,7 @@ var path = require('path');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use('/redirect', redirect);
 app.use('/register', register);
-app.use('/file', file);
 
 app.get('/', function(req, res) {
   fs.readFile('/opt/chat-ops-common/c66-token.json', 'utf8', function (err,data) {
