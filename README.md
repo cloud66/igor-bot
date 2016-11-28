@@ -4,8 +4,7 @@ RoboChat is an open source Slack-bot, build by [Cloud 66](http://www.cloud66.com
 ![Codeship Status for cloud66/habitus](https://codeship.com/projects/714284d0-e914-0133-1e5d-4eaa3299b296/status)
 
 - Website: http://www.igor-bot.io/
-- [Download Igor](https://github.com/cloud66/habitus/releases?utm_source=Githubdownload&utm_medium=GHDpage&utm_campaign=habitus)
-- Slack Channel: https://cloud66ers.slack.com/messages/igor-bot/
+- [Download Igor](app.cloud66.com/easydeploys)
 - Articles: http://blog.cloud66.com/tag/igor-bot/ 
 
 ### Key features:
@@ -64,8 +63,6 @@ Here is a list of all the commands:
 
 -   `deploy` | `redeploy` : Deploy the specified stack.
 -   `cancel` | `stop` | `exit` | `halt` : Cancel the specified stack.
--   `register` | `authorize` | `auth` : Try to register to your Cloud 66 account with the specified token.
--   `deregister` | `deauthorize` | `deauth` : Deregister igor from your Cloud 66 account
 -   `list` | `get` | `show` | `find` | `stacks` : List all the stacks or a specified one.
 
 Commands you are giving to igor may accept or need options. In the next part we will see the options for each commands. If you try to use a wrong option, igor will respond with a usage message corresponding to the command you tried to use, if the usage message is not enough you may find an answer with the help option.
@@ -90,7 +87,7 @@ The order of the options doesn't matter.
 
 #### Deploy
 
-The deploy command is the best alternative to deploy your stacks. Instead of going on your Cloud 66 account and redploy your stack you will be able to directly do it from Slack. The deploy command only works if you provide the exact name of an existing stack, the other options such as environment ans services are optional. You will be warn if the stack you specified dosen't exist.
+The deploy command is the best alternative to deploy your stacks. Instead of going on your Cloud 66 accounr or use the toolbelt you will be able to directly do it from Slack. The deploy command only works if you provide the exact name of an existing stack, the other options such as environment ans services are optional. You will be warn if the stack you specified dosen't exist.
 
 Here is an exemple :
 
