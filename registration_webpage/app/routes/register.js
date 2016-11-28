@@ -21,22 +21,24 @@ const authorizationUri = oauth2.authorizationCode.authorizeURL({
 });
 
 router.post('/', function(req, res){
-  fs.writeFile("/opt/chat-ops-common/slack-token.txt", req.body.slackToken, function(err) {
-    if(err) return console.log(err);
-  });
-  fs.writeFile("/opt/chat-ops-common/c66-token.json", "{\"local_token\":\""+req.body.c66Token+"\"}", function(err) {
-    if(err) return console.log(err);
-  });
+  if(req.body.slackToken != "" && req.body.c66Token != ""){
+      fs.writeFile("/opt/chat-ops-common/slack-token.txt", req.body.slackToken, function(err) {
+          if(err) return console.log(err);
+      });
+      fs.writeFile("/opt/chat-ops-common/c66-token.json", "{\"local_token\":\""+req.body.c66Token+"\"}", function(err) {
+          if(err) return console.log(err);
+      });
 
-  fs.stat('/opt/chat-ops-common/is-token.txt', function (err, stats) {
-   if (err) res.redirect('/')
-   else{
-     fs.unlink('/opt/chat-ops-common/is-token.txt',function(err){
-       if(err) res.redirect('/')
-       else res.redirect('/')
-     });
-    }
-   });
+      fs.stat('/opt/chat-ops-common/is-token.txt', function (err, stats) {
+          if (err) res.redirect('/')
+          else{
+              fs.unlink('/opt/chat-ops-common/is-token.txt',function(err){
+                  if(err) res.redirect('/')
+                  else res.redirect('/')
+              });
+          }
+      });
+  }
 });
 
 
