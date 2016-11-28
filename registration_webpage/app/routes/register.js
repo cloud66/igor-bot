@@ -46,18 +46,18 @@ router.post('/oauth', function(req, res){
 
 router.post('/deregister', function(req, res){
    fs.stat('/opt/chat-ops-common/slack-token.txt', function (err, stats) {
-    if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
-    fs.unlink('/opt/chat-ops-common/slack-token.txt',function(err){
-        if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
-        fs.stat('./server/upload/my.csv', function (err, stats) {
-          if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
-          fs.unlink('/opt/chat-ops-common/c66-token.json',function(err){
+      if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
+      fs.unlink('/opt/chat-ops-common/slack-token.txt',function(err){
           if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
-              fs.stat('/opt/chat-ops-common/is-token.txt', function (err, stats) {
-                  if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
-                    fs.unlink('/opt/chat-ops-common/is-token.txt',function(err){
-                     if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
-                        res.redirect('/')
+          fs.stat('./server/upload/my.csv', function (err, stats) {
+            if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
+            fs.unlink('/opt/chat-ops-common/c66-token.json',function(err){
+               if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
+               fs.stat('/opt/chat-ops-common/is-token.txt', function (err, stats) {
+                   if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
+                   fs.unlink('/opt/chat-ops-common/is-token.txt',function(err){
+                      if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
+                      res.redirect('/')
                });
             });
          });

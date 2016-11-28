@@ -1,8 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var redirect = require('./app/routes/redirect.js');
 var register = require('./app/routes/register.js');
-var file = require('./app/routes/test_file_existance.js');
 var fs = require('fs');
 var app = express();
 
