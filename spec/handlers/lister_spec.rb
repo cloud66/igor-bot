@@ -35,7 +35,7 @@ describe Lita::Handlers::Lister, lita_handler: true, additional_lita_handlers: L
 
   it "order to display the help for the list command" do
     send_command("list -h")
-    expect(replies).to eq([{:title=>"Help for list", :text=>"bla bla list", :color=>"#000000", :fallback=>"Trollop::HelpNeeded", :mrkdwn_in=>["text"], :pretext=>nil}])
+    expect(replies).to eq([{:title=>"Help for list", :text=>"Refer to the documentation", :color=>"#000000", :fallback=>"Trollop::HelpNeeded", :mrkdwn_in=>["text"], :pretext=>nil}])
   end
 
   #SPAMMING COMMANDS

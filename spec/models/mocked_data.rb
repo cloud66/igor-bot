@@ -7,7 +7,7 @@ FIRST_STACK = {"uid"=>"327270243a9c6cb6eefa123ec55bde6f", "name"=>"pm-stagefirst
                "maintenance_mode"=>false, "has_loadbalancer"=>false, "created_at"=>"2016-10-17T11:31:01Z",
                "updated_at"=>"2016-10-20T10:32:10Z", "deploy_directory"=>"/var/deploy/pm-stage-drupal",
                "cloud_status"=>"healthy", "is_busy"=>false,
-               "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/fba83517119f1aa55e2d68b706756409/7655dc3c027455d9c6425ef128a991dc?services=drupal"}
+               "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/cooluidiscool/sweetuidissweet?services=drupal"}
 
 SECOND_STACK = {"uid"=>"337270243a9c6cb6eefa123ec55bde6f", "name"=>"pm-stagesecond-drupal",
                 "git"=>nil, "git_branch"=>nil, "environment"=>"production", "cloud"=>"DigitalOcean",
@@ -16,7 +16,7 @@ SECOND_STACK = {"uid"=>"337270243a9c6cb6eefa123ec55bde6f", "name"=>"pm-stageseco
                 "maintenance_mode"=>false, "has_loadbalancer"=>false, "created_at"=>"2016-10-17T11:31:01Z",
                 "updated_at"=>"2016-10-20T10:32:10Z", "deploy_directory"=>"/var/deploy/pm-stage-drupal",
                 "cloud_status"=>"healthy", "is_busy"=>false,
-                "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/fba83517119f1aa55e2d68b706756409/7655dc3c027455d9c6425ef128a991dc?services=drupal"}
+                "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/cooluidiscool/sweetuidissweet?services=drupal"}
 
 LAST_STACK = {"uid"=>"37270243a9c6cb6eefa123ec55bde6f", "name"=>"pm-stagelast-drupal",
               "git"=>nil, "git_branch"=>nil, "environment"=>"production", "cloud"=>"DigitalOcean",
@@ -25,7 +25,7 @@ LAST_STACK = {"uid"=>"37270243a9c6cb6eefa123ec55bde6f", "name"=>"pm-stagelast-dr
               "maintenance_mode"=>false, "has_loadbalancer"=>false, "created_at"=>"2016-10-17T11:31:01Z",
               "updated_at"=>"2016-10-20T10:32:10Z", "deploy_directory"=>"/var/deploy/pm-stage-drupal",
               "cloud_status"=>"healthy", "is_busy"=>false,
-              "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/fba83517119f1aa55e2d68b706756409/7655dc3c027455d9c6425ef128a991dc?services=drupal"}
+              "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/cooluidiscool/sweetuidissweet?services=drupal"}
 
 GOOD_STACK = {"uid"=>"good_stack", "name"=>"pm-good_stack-drupal",
              "git"=>nil, "git_branch"=>nil, "environment"=>"production", "cloud"=>"DigitalOcean",
@@ -34,7 +34,7 @@ GOOD_STACK = {"uid"=>"good_stack", "name"=>"pm-good_stack-drupal",
              "maintenance_mode"=>false, "has_loadbalancer"=>false, "created_at"=>"2016-10-17T11:31:01Z",
              "updated_at"=>"2016-10-20T10:32:10Z", "deploy_directory"=>"/var/deploy/pm-stage-drupal",
              "cloud_status"=>"healthy", "is_busy"=>false,
-             "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/fba83517119f1aa55e2d68b706756409/7655dc3c027455d9c6425ef128a991dc?services=drupal"}
+             "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/cooluidiscool/sweetuidissweet?services=drupal"}
 
 BUSY_STACK = {"uid"=>"busy_stack", "name"=>"pm-busy_stack-drupal",
              "git"=>nil, "git_branch"=>nil, "environment"=>"production", "cloud"=>"DigitalOcean",
@@ -43,7 +43,7 @@ BUSY_STACK = {"uid"=>"busy_stack", "name"=>"pm-busy_stack-drupal",
              "maintenance_mode"=>false, "has_loadbalancer"=>false, "created_at"=>"2016-10-17T11:31:01Z",
              "updated_at"=>"2016-10-20T10:32:10Z", "deploy_directory"=>"/var/deploy/pm-stage-drupal",
              "cloud_status"=>"healthy", "is_busy"=>true,
-             "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/fba83517119f1aa55e2d68b706756409/7655dc3c027455d9c6425ef128a991dc?services=drupal"}
+             "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/cooluidiscool/sweetuidissweet?services=drupal"}
 
 BUSY_TO_GOOD_FOREVER_GOOD_STACK = {"uid"=>"good_to_good_forever_stack", "name"=>"good_to_good_forever_stack",
               "git"=>nil, "git_branch"=>nil, "environment"=>"production", "cloud"=>"DigitalOcean",
@@ -52,7 +52,7 @@ BUSY_TO_GOOD_FOREVER_GOOD_STACK = {"uid"=>"good_to_good_forever_stack", "name"=>
               "maintenance_mode"=>false, "has_loadbalancer"=>false, "created_at"=>"2016-10-17T11:31:01Z",
               "updated_at"=>"2016-10-20T10:32:10Z", "deploy_directory"=>"/var/deploy/pm-stage-drupal",
               "cloud_status"=>"healthy", "is_busy"=>false,
-              "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/fba83517119f1aa55e2d68b706756409/7655dc3c027455d9c6425ef128a991dc?services=drupal"}
+              "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/cooluidiscool/sweetuidissweet?services=drupal"}
 
 BUSY_TO_GOOD_FOREVER_BUSY_STACK = {"uid"=>"busy_to_good_forever_stack_wait_loop", "name"=>"busy_to_good_forever_stack_wait_loop",
               "git"=>nil, "git_branch"=>nil, "environment"=>"production", "cloud"=>"DigitalOcean",
@@ -61,7 +61,7 @@ BUSY_TO_GOOD_FOREVER_BUSY_STACK = {"uid"=>"busy_to_good_forever_stack_wait_loop"
               "maintenance_mode"=>false, "has_loadbalancer"=>false, "created_at"=>"2016-10-17T11:31:01Z",
               "updated_at"=>"2016-10-20T10:32:10Z", "deploy_directory"=>"/var/deploy/pm-stage-drupal",
               "cloud_status"=>"healthy", "is_busy"=>true,
-              "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/fba83517119f1aa55e2d68b706756409/7655dc3c027455d9c6425ef128a991dc?services=drupal"}
+              "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/cooluidiscool/sweetuidissweet?services=drupal"}
 
 BUSY_TO_GOOD_FOREVER_BUSY_STACK_SET_LOCAL_STATUS_TO_CANCELLING_GOOD = {"uid"=>"busy_to_good_forever_stack_set_local_status_to_cancelling_good", "name"=>"busy_to_good_forever_stack_set_local_status_to_cancelling_good",
              "git"=>nil, "git_branch"=>nil, "environment"=>"production", "cloud"=>"DigitalOcean",
@@ -70,7 +70,7 @@ BUSY_TO_GOOD_FOREVER_BUSY_STACK_SET_LOCAL_STATUS_TO_CANCELLING_GOOD = {"uid"=>"b
              "maintenance_mode"=>false, "has_loadbalancer"=>false, "created_at"=>"2016-10-17T11:31:01Z",
              "updated_at"=>"2016-10-20T10:32:10Z", "deploy_directory"=>"/var/deploy/pm-stage-drupal",
              "cloud_status"=>"healthy", "is_busy"=>false,
-             "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/fba83517119f1aa55e2d68b706756409/7655dc3c027455d9c6425ef128a991dc?services=drupal"}
+             "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/cooluidiscool/sweetuidissweet?services=drupal"}
 
 BUSY_TO_GOOD_FOREVER_BUSY_STACK_SET_LOCAL_STATUS_TO_CANCELLING_BUSY = {"uid"=>"busy_to_good_forever_stack_set_local_status_to_cancelling_busy", "name"=>"busy_to_good_forever_stack_set_local_status_to_cancelling_busy",
               "git"=>nil, "git_branch"=>nil, "environment"=>"production", "cloud"=>"DigitalOcean",
@@ -79,7 +79,7 @@ BUSY_TO_GOOD_FOREVER_BUSY_STACK_SET_LOCAL_STATUS_TO_CANCELLING_BUSY = {"uid"=>"b
               "maintenance_mode"=>false, "has_loadbalancer"=>false, "created_at"=>"2016-10-17T11:31:01Z",
               "updated_at"=>"2016-10-20T10:32:10Z", "deploy_directory"=>"/var/deploy/pm-stage-drupal",
               "cloud_status"=>"healthy", "is_busy"=>true,
-              "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/fba83517119f1aa55e2d68b706756409/7655dc3c027455d9c6425ef128a991dc?services=drupal"}
+              "redeploy_hook"=>"http://stage.cloud66.com/hooks/v1/stacks/redeploy/cooluidiscool/sweetuidissweet?services=drupal"}
 
 STACK_STARTED_REDEPLOY_QUEUED_FALSE = {"ok"=>true, "message"=>"Stack starting redeployment", "queued"=>false}
 
