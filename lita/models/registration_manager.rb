@@ -49,9 +49,11 @@ module Models
 				self.access_token = OAuth2::AccessToken.new(client, config[:local_token])
 				if File.exist?("/opt/chat-ops-common/is-token.txt")
 				else
-					set_token_info(local_token)
+					set_token_info(local_token);
 				end
 			end
+		rescue => exc
+			return exc.message
 		end
 
 		private
