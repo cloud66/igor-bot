@@ -22,7 +22,7 @@ const authorizationUri = oauth2.authorizationCode.authorizeURL({
 
 router.post('/', function(req, res){
   if(req.body.slackToken != "" && req.body.c66Token != ""){
-      fs.writeFile("/opt/chat-ops-common/slack-token.txt", req.body.slackToken, function(err) {
+      fs.writeFile("/opt/chat-ops-common/slack-token.json", "{\"slack_token\":\""+req.body.slackToken+"\"}", function(err) {
           if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
       });
       fs.writeFile("/opt/chat-ops-common/c66-token.json", "{\"local_token\":\""+req.body.c66Token+"\"}", function(err) {
@@ -47,17 +47,17 @@ router.post('/oauth', function(req, res){
 });
 
 router.post('/deregister', function(req, res){
-   fs.stat('/opt/chat-ops-common/slack-token.txt', function (err, stats) {
+   fs.stat('/opt/chat-ops-common/slack-token.json', function (err, stats) {
       if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
-      fs.unlink('/opt/chat-ops-common/slack-token.txt',function(err){
+      fs.unlink('/opt/chat-ops-common/slack-token.json',function(err){
           if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
             fs.stat('/opt/chat-ops-common/c66-token.json', function (err, stats) {
             if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
                fs.unlink('/opt/chat-ops-common/c66-token.json',function(err){
                if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
-                   fs.stat('/opt/chat-ops-common/is-token.txt', function (err, stats) {
+                   fs.stat('/opt/chat-ops-common/is-token', function (err, stats) {
                    if (err) res.sendfile(__dirname + '/app/view/html/failure.html');
-                      fs.unlink('/opt/chat-ops-common/is-token.txt',function(err){
+                      fs.unlink('/opt/chat-ops-common/is-token',function(err){
                       if(err) res.sendfile(__dirname + '/app/view/html/failure.html');
                       res.redirect('/')
                });

@@ -29,9 +29,14 @@ module Models
 
 		def set_token_info(code)
 			client = OAuth2::Client.new(APP_UID, APP_SECRET, :site => 'https://stage.cloud66.com')
-			self.access_token = client.auth_code.get_token(code, :redirect_uri => 'urn:ietf:wg:oauth:2.0:oob')
+			begin
+				self.access_token = client.auth_code.get_token(code, :redirect_uri => 'urn:ietf:wg:oauth:2.0:oob')
+			rescue => exc
+				exc.message = "The Cloud 66 token provided is not valid, please try re-register using the registration page." if exc.message.include?("The data given to this server does not meet our criteria")
+				raise exc
+			end
 			warning = save_token_info(TOKEN_LOCATION)
-			File.new("/opt/chat-ops-common/is-token.txt", "w")
+			File.new("/opt/chat-ops-common/is-token", "w")
 			return warning.nil? ? nil : "Warning: Persisting your token to disk failed due to: #{warning}"
 		end
 
@@ -47,7 +52,7 @@ module Models
 				local_token = config[:local_token]
 				client = OAuth2::Client.new(APP_UID, APP_SECRET, :site => 'https://stage.cloud66.com')
 				self.access_token = OAuth2::AccessToken.new(client, config[:local_token])
-				if File.exist?("/opt/chat-ops-common/is-token.txt")
+				if File.exist?("/opt/chat-ops-common/is-token")
 				else
 					set_token_info(local_token);
 				end

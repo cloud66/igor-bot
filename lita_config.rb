@@ -11,7 +11,8 @@ Lita.configure do |config|
 	config.redis[:port] = ENV['REDIS_PORT'] || 6379
 	config.robot.adapter = :slack
   if(config.adapters.respond_to?(:slack))
-   config.adapters.slack.token = (File.read("/opt/chat-ops-common/slack-token.txt")).to_s
+    raise "Could not find a slack token, please register the chat ops client using the registration page." unless File.exist?("/opt/chat-ops-common/slack-token.json")
+    slack_token_json = JSON.parse((File.read("/opt/chat-ops-common/slack-token.json")))
+    config.adapters.slack.token = slack_token_json["slack_token"]
   end
 end
-
