@@ -18,6 +18,9 @@ module Models
 		end
 
 		def is_registered?
+			if File.exist?(TOKEN_LOCATION)
+				load_c66_token_info(TOKEN_LOCATION)
+			end
 			return !self.access_token.nil?
 		end
 
