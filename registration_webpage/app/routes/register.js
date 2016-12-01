@@ -38,7 +38,7 @@ router.post('/', function(req, res){
               });
           }
       });
-  }else res.send(null);
+  }else res.redirect('/');
 });
 
 
