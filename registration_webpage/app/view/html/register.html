@@ -31,7 +31,7 @@
         <form class="Form" action="" method="POST">
             <div class="Form-row Form-infieldWrap">
                 <label class="Form-label" for="js_slack_team_name">Sign in to Slack with your Team Name</label>
-                <input class="Form-text u-fullWidth" id="js_slack_team_name" type="text" name="slacklink">
+                <input class="Form-text u-fullWidth" id="js_slack_team_name" type="text" name="slacklink" autofocus>
                 <button class="Button Button--pri Button--go" id="js_slack_team_btn">Go</button>
             </div>
         </form>
@@ -47,12 +47,12 @@
         <form class="Form" action="/register" method="POST">
             <div class="Form-row">
                 <label class="Form-label" for="slack-token">Enter your Slack token</label>
-                <input class="Form-text u-fullWidth" id="slack-token" type="text" name="slackToken" required>
+                <input class="Form-text u-fullWidth" id="slack-token" type="text" name="slackToken" required="true">
             </div>
 
             <div class="Form-row">
                 <label class="Form-label" for="c66-token">Enter your <a id="js_post_c66_token_form" href="#">Cloud 66 token</a></label>
-                <input class="Form-text u-fullWidth" id="c66-token" type="text" name="c66Token" required>
+                <input class="Form-text u-fullWidth" id="c66-token" type="text" name="c66Token" required="true">
             </div>
 
             <div class="Form-row u-flushBottom">

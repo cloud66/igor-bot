@@ -112,3 +112,8 @@
 .Form-infieldWrap {
     position: relative;
 }
+
+input:focus:invalid {
+  color: #b94a48;
+  border-color: #cc3333 !important;
+}
