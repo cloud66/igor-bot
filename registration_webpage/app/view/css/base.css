@@ -51,7 +51,7 @@ h1, h2 {
 }
 h2 {
     font-size: 1.4em;
-    margin: 0 0 1em;
+    margin: 0 0 0.8em;
 }
 
 p {
@@ -75,13 +75,18 @@ hr {
   border-top: 1px solid #ddd;
 }
 
+strong {
+    font-weight: normal;
+    color: #49545b;
+}
+
 /**
  * SECTIONS
  */
 
 .Header {
     margin: 2em auto;
-    padding: 0 3em 2em 3em;
+    padding: 0 3em 0 3em;
     max-width: 38em;
     text-align: center;
 }
