@@ -108,6 +108,11 @@
     padding: 11px 14px;
     border-radius: 0 4px 4px 0;
 }
+/*@-moz-document url-prefix() {
+  .Button--go {
+     padding: 10px 14px;
+  }
+}*/
 
 .Form-infieldWrap {
     position: relative;
