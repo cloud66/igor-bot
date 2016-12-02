@@ -18,7 +18,13 @@ module Models
 		end
 
 		def is_registered?
-			return !self.access_token.nil?
+			if File.exist?(TOKEN_LOCATION)
+				load_c66_token_info(TOKEN_LOCATION)
+				return !self.access_token.nil?
+			else
+				return false
+			end
+
 		end
 
 		def registration_url
