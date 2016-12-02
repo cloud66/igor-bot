@@ -21,6 +21,9 @@
     transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
     color: #333;
 }
+.Form-text:focus {
+    outline: none;
+}
 
 .Button {
     box-sizing: border-box;

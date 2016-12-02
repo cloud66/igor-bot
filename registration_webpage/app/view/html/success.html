@@ -1,21 +1,57 @@
-<html>
-  <head>
-    <style>
-    .box{
-      border: 1px solid black;
-      border-radius: 5px;
-      padding: 15px;
-      display: inline-block;
-    }
-    </style>
-  </head>
-  <div class="body-register"
-    <h3>Welcome to RoboChat<h3>
-      <p>Hello, I am Igor and I am not authorized yet.</p>
-    <div class="box">
-      <form action="/register/deregister" method="POST">
-        <input type="submit" value="Deregister">
-      </form>
-    </div>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+
+    <link rel="stylesheet" media="all" href="http://localhost:8080/view/css/styles.css">
+    <!-- <link rel="stylesheet" media="all" href="../css/styles.css"> -->
+    <title>ChatOps Install Success · Cloud 66</title>
+</head>
+<body>
+    <header class="Header">
+        <div class="Brand">
+            <a rel="home" href="http://www.cloud66.com/"><img src="http://www.cloud66.com/img/logo/cloud66.svg" alt="Cloud 66" width="60"></a>
+        </div>
+        <h1>
+           Success
+        </h1>
+        <p class="lead">
+             Igor was registered Successfully for ChatOps!
+        </p>
+    </header>
+
+    <section class="Section Section--pri">
+        <div class="u-textCentered">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 125.02625" enable-background="new 0 0 100 100.021" xml:space="preserve" width="80">
+  <path fill="#52B54A" d="M51.438,0.021C23.834-0.773,0.814,20.96,0.021,48.563C0.007,49.049,0,49.535,0,50.021
+    c0,27.614,22.386,50,50,50s50-22.386,50-50C100.012,22.958,78.488,0.799,51.438,0.021z M72.281,25.271l9.906,9.906L52.469,64.865
+    l-9.906,9.906l-9.875-9.906L17.812,50.021l9.906-9.906l14.844,14.844L72.281,25.271z"/>
+  </svg>
+        </div>
+
+        <div class="u-textCentered">
+          <p><a href="#">Read the guide, to to learn how to get started using Igor</a></p>
+        </div>
+
+        <form target="_blank" class="Form is-hidden" action="/register/deregister" method="POST" class="u-textCentered" id="js_get_cloud66_token">
+            <button class="Button Button--pri u-fullWidth" type="submit">Unregister Igor</button>
+        </form>
+
+    </section>
+
+    <footer class="Footer">
+        <nav>
+          <a href="">ChatOps Documentation</a> | <a href="mailto:support@cloud66.com?subject=ChatOps support">Help with ChatOps</a> | <a class="link-muted" id="js_post_c66_token_form" href="#">Unregister Igor</a>
+        </nav>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+    <script>
+        (function( $ ) {
+            $('#js_post_c66_token_form').on('click', function(){
+                $('#js_get_cloud66_token').submit();
+            });
+        })( window.jQuery );
+    </script>
+</body>
 </html>

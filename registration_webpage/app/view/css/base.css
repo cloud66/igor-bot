@@ -34,9 +34,13 @@ body {
 a, a:visited {
     color: #0088cc;
 }
-
 a:hover {
     color: #0088cc;
+}
+
+a.link-muted,
+a.link-muted:hover {
+    color: #999;
 }
 
 /**
@@ -78,6 +82,24 @@ hr {
 strong {
     font-weight: normal;
     color: #49545b;
+}
+
+.number-circle {
+    position: relative;
+    top: -1px;
+    display: inline-block;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    background: #52B54A;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    margin-right: 0.7em;
+}
+.number-circle--red {
+    background: #B52B2B;
 }
 
 /**

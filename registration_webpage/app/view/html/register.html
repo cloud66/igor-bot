@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 
     <link rel="stylesheet" media="all" href="http://localhost:8080/view/css/styles.css">
-
+    <!-- <link rel="stylesheet" media="all" href="../css/styles.css"> -->
     <title>ChatOps Install · Cloud 66</title>
 </head>
 <body>
@@ -28,7 +28,7 @@
         <h2 class="u-textCentered ">Create a Slack Bot</h2>
 
 
-        <form class="Form" action="/register" method="POST">
+        <form class="Form" action="" method="POST">
             <div class="Form-row Form-infieldWrap">
                 <label class="Form-label" for="js_slack_team_name">Sign in to Slack with your Team Name</label>
                 <input class="Form-text u-fullWidth" id="js_slack_team_name" type="text" name="slacklink">
@@ -36,9 +36,10 @@
             </div>
         </form>
 
-        <p>On the <strong>Custom Integrations</strong> page click on <strong>Bots</strong>.</p>
-        <p>Create <strong>a new bot</strong>.</p>
-        <p>Then enter the <strong>Slack</strong> and <strong>Cloud 66</strong> tokens below.</p>
+        <p><span class="number-circle">1</span> On the <strong>Custom Integrations</strong> page click on <strong>Bots</strong>.</p>
+        <p><span class="number-circle">2</span> Create <strong>a new bot</strong>.</p>
+        <p><span class="number-circle">3</span> Enter the <strong>Slack</strong> and <strong>Cloud 66</strong> tokens below.</p>
+
         <hr>
 
         <h2 class="u-textCentered ">Authorize on Cloud 66</h2>
@@ -46,12 +47,12 @@
         <form class="Form" action="/register" method="POST">
             <div class="Form-row">
                 <label class="Form-label" for="slack-token">Enter your Slack token</label>
-                <input class="Form-text u-fullWidth" id="slack-token" type="text" name="slackToken">
+                <input class="Form-text u-fullWidth" id="slack-token" type="text" name="slackToken" required>
             </div>
 
             <div class="Form-row">
                 <label class="Form-label" for="c66-token">Enter your <a id="js_post_c66_token_form" href="#">Cloud 66 token</a></label>
-                <input class="Form-text u-fullWidth" id="c66-token" type="text" name="c66Token"><br>
+                <input class="Form-text u-fullWidth" id="c66-token" type="text" name="c66Token" required>
             </div>
 
             <div class="Form-row u-flushBottom">
