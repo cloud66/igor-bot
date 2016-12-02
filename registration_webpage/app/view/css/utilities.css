@@ -1,0 +1,38 @@
+/**
+ * UTILS COMMON
+ */
+
+.u-textCentered {
+    text-align: center;
+}
+
+.u-inlineBlock {
+  display: inline-block !important;
+  max-width: 100%; /* 1 */
+}
+
+.u-block {
+  display: block !important;
+}
+
+.u-table {
+  display: table !important;
+}
+
+.u-tableCell {
+  display: table-cell !important;
+}
+
+.u-fullWidth {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.u-flushTop {
+    margin-top: 0;
+}
+
+.u-flushBottom {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}

@@ -1,35 +1,77 @@
-<html>
-  <head>
-    <style>
-    .box{
-      border: 1px solid black;
-      border-radius: 5px;
-      padding: 15px;
-      display: inline-block;
-    }
-    </style>
-  </head>
-  <div class="body-register"
-    <h3>Welcome to RoboChat<h3>
-      <p>Hello, I am Igor and I am not authorized yet.</p>
-    <div class="box">
-      <form action="/register/oauth" method="POST">
-        <input type="submit" value="Get my c66 token">
-      </form>
-      <form action="/register" method="POST">
-        <h5>1) Create a slack bot<h5>
-          <p><a href="https://your_team.slack.com/apps/manage/custom-integrations">https://your_team.slack.com/apps/manage/custom-integrations</a></p>
-          <p>Go to Bots</p>
-          <p>Create a bot and forward us the token :</p>
-          <p>Insert the following Slack Token</p>
-          <input type="text" name="slackToken">
-        <h5>2) Authorize on Cloud 66<h5>
-          <p>Enter your Cloud 66 token :</p>
-          <input type="text" name="c66Token"><br>
-          <input type="submit" value="Authorize the bot">
-      </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    <link rel="stylesheet" media="all" href="../css/styles.css">
+    <title>ChatOps Install · Cloud 66</title>
+</head>
+<body>
+    <header class="Header">
+        <div class="Brand">
+            <a rel="home" href="http://www.cloud66.com/"><img src="http://www.cloud66.com/img/logo/cloud66.svg" alt="Cloud 66" width="60"></a>
+        </div>
+        <h1>
+           Welcome to Igor ChatOps
+        </h1>
+        <p class="lead">
+             Lets get started by authorizing ChatOps.
+        </p>
+        <form class="Form" action="/register/oauth" method="POST" class="u-textCentered">
+            <button class="Button Button--pri u-fullWidth" type="submit">Get your Cloud 66 Token</button>
+        </form>
+    </header>
+
+    <section class="Section Section--pri">
+        <h2 class="u-textCentered ">Create a Slack Bot</h2>
 
 
-    </div>
-  </div>
+        <form class="Form" action="/register" method="POST">
+            <div class="Form-row Form-infieldWrap">
+                <label class="Form-label" for="js_slack_team_name">Sign in to Slack with your Team Name</label>
+                <input class="Form-text u-fullWidth" id="js_slack_team_name" type="text" name="slacklink">
+                <button class="Button Button--pri Button--go" id="js_slack_team_btn">Go</button>
+            </div>
+        </form>
+
+        <p>On the Custom Integrations page click on Bots</p>
+        <p>Create a new bot and enter the token below</p>
+
+        <hr>
+
+        <h2 class="u-textCentered ">Authorize on Cloud 66</h2>
+
+        <form class="Form" action="/register" method="POST">
+            <div class="Form-row">
+                <label class="Form-label" for="slack-token">Enter your Slack token</label>
+                <input class="Form-text u-fullWidth" id="slack-token" type="text" name="slackToken">
+            </div>
+
+            <div class="Form-row">
+                <label class="Form-label" for="c66-token">Enter your Cloud 66 token</label>
+                <input class="Form-text u-fullWidth" id="c66-token" type="text" name="c66Token"><br>
+            </div>
+
+            <div class="Form-row u-flushBottom">
+                <input class="Button Button--pri u-fullWidth" type="submit" value="Authorize ChatOps">
+            </div>
+        </form>
+    </section>
+
+    <footer class="Footer">
+        <nav><a href="">ChatOps Documentation</a> | <a href="mailto:support@cloud66.com?subject=ChatOps support">Help with ChatOps</a></nav>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+    <script>
+        (function( $ ) {
+            $('#js_slack_team_btn').on('click', function() {
+                var slackTeam = $('#js_slack_team_name').val().trim();
+                var url = "https://" + slackTeam + ".slack.com/apps/manage/custom-integrations"
+                var botUrl = ""
+                window.open(url, '_blank');
+                return false;
+            });
+        })( window.jQuery );
+    </script>
+</body>
 </html>
