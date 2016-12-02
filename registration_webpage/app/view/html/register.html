@@ -21,6 +21,11 @@
             <a rel="home" href="http://www.cloud66.com/"><img src="http://www.cloud66.com/img/logo/cloud66.svg" alt="Cloud 66" width="60"></a>
         </div>
         <h1>
+
+          <% if (info){ %>
+          <div class="alert alert-danger"><%= info %></div>
+          <% } %>
+
            Welcome to Igor ChatOps
         </h1>
         <p class="lead">
