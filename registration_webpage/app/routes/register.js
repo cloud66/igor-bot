@@ -16,6 +16,7 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 
+
 const authorizationUri = oauth2.authorizationCode.authorizeURL({
   redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
   scope: 'public admin redeploy jobs users',
@@ -39,7 +40,9 @@ router.post('/', function(req, res){
                       else{
                           fs.unlink('/opt/chat-ops-common/is-token.txt',function(err){
                               if(err) res.redirect('/')
-                              else res.redirect('/')
+                              else {
+                                res.redirect('/')
+                              }
                           });
                       }
                   });
@@ -68,7 +71,12 @@ router.post('/deregister', function(req, res){
                    if (err) res.sendFile(path.resolve('app/view/html/failure.html'));
                       fs.unlink('/opt/chat-ops-common/is-token',function(err){
                       if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
-                      res.redirect('/')
+                      else{
+                        req.flash('info', 'deregister');
+                        console.log(req.flash('info'))
+                        res.render(__dirname + '/app/view/html/register.html', {info: req.flash("info")});
+                      }
+
                });
             });
          });
