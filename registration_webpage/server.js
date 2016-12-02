@@ -12,7 +12,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use('/register', register);
-app.use(express.static('app'));
+app.use(express.static('app/view/css'));
+app.use(express.static('app/view/html'));
 
 app.get('/', function(req, res) {
   fs.readFile('/opt/chat-ops-common/c66-token.json', 'utf8', function (err,data) {

@@ -14,6 +14,7 @@ module Models
 		APP_SECRET = "1d639bc0b2296aebdb7f0737645545ea2506ca8d20d0f9e34d976ba704debf23"
 
 		def initialize
+			puts('?')
 			load_c66_token_info(TOKEN_LOCATION)
 		end
 
@@ -35,10 +36,13 @@ module Models
 
 		def set_token_info(code)
 			client = OAuth2::Client.new(APP_UID, APP_SECRET, :site => 'https://stage.cloud66.com')
+			puts(code)
 			self.access_token = client.auth_code.get_token(code, :redirect_uri => 'urn:ietf:wg:oauth:2.0:oob')
 			warning = save_token_info(TOKEN_LOCATION)
 			File.new("/opt/chat-ops-common/is-token", "w")
 			return warning.nil? ? nil : "Warning: Persisting your token to disk failed due to: #{warning}"
+		rescue => exc
+			return puts(exc)
 		end
 
 		def delete_token_info
@@ -55,6 +59,7 @@ module Models
 				self.access_token = OAuth2::AccessToken.new(client, config[:local_token])
 				if File.exist?("/opt/chat-ops-common/is-token")
 				else
+					puts('eho')
 					set_token_info(local_token);
 				end
 			end
