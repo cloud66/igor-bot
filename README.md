@@ -123,3 +123,16 @@ Here is an exemple :
 `cancel -s my-stack-name`
 
 Depending of the actual state of the stack you are trying to cancel you will get the apropriate answer such as already deploying, already cancelling, trying to cancel.
+
+
+### Help:
+__________________________________________________________________
+
+###### If the bot doesn't connect to Slack
+
+If you can't see your bot connected among the members of your channel on Slack it means the container running Igor ChatOps failed to launch due to an incorrect 
+
+
+###### If the bot doesn't connect to Slack
+
+regjnerlnerikljnegrk gr
