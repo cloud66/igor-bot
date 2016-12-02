@@ -36,13 +36,10 @@ module Models
 
 		def set_token_info(code)
 			client = OAuth2::Client.new(APP_UID, APP_SECRET, :site => 'https://stage.cloud66.com')
-			puts(code)
 			self.access_token = client.auth_code.get_token(code, :redirect_uri => 'urn:ietf:wg:oauth:2.0:oob')
 			warning = save_token_info(TOKEN_LOCATION)
 			File.new("/opt/chat-ops-common/is-token", "w")
 			return warning.nil? ? nil : "Warning: Persisting your token to disk failed due to: #{warning}"
-		rescue => exc
-			return puts(exc)
 		end
 
 		def delete_token_info
