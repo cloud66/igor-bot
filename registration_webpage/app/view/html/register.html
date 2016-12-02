@@ -5,27 +5,22 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 
     <link rel="stylesheet" media="all" href="http://localhost:8080/view/css/styles.css">
-    <!-- <link rel="stylesheet" media="all" href="../css/styles.css"> -->
+    <link rel="stylesheet" media="all" href="../css/styles.css">
     <link rel="stylesheet" media="all" href="styles.css">
     <title>ChatOps Install · Cloud 66</title>
 </head>
 <body>
-    <!--
-    Add unregistered message
+    <% if (info){ %>
     <div class="Message">
-        You have successfully unregistered Igor
+        <%= info %>
     </div>
-    -->
+    <% } %>
+
     <header class="Header">
         <div class="Brand">
             <a rel="home" href="http://www.cloud66.com/"><img src="http://www.cloud66.com/img/logo/cloud66.svg" alt="Cloud 66" width="60"></a>
         </div>
         <h1>
-
-          <% if (info){ %>
-          <div class="alert alert-danger"><%= info %></div>
-          <% } %>
-
            Welcome to Igor ChatOps
         </h1>
         <p class="lead">
@@ -49,8 +44,8 @@
         </form>
 
         <p><span class="number-circle">1</span> On the <strong>Custom Integrations</strong> page click on <strong>Bots</strong>.</p>
-        <p><span class="number-circle">2</span> Create <strong>a new bot</strong>.</p>
-        <p><span class="number-circle">3</span> Enter the <strong>Slack</strong> and <strong>Cloud 66</strong> tokens below.</p>
+        <p><span class="number-circle">2</span> Create <strong>a new bot</strong>, and copy the Slack token.</p>
+        <p><span class="number-circle">3</span> Paste the <strong>Slack</strong> and <strong>Cloud 66</strong> tokens in the form below.</p>
 
         <hr>
 
