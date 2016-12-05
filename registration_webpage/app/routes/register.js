@@ -70,8 +70,7 @@ router.post('/deregister', function(req, res){
                if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
                    fs.stat('/opt/chat-ops-common/is-token', function (err, stats) {
                       fs.unlink('/opt/chat-ops-common/is-token',function(err){
-                        req.flash('info', 'deregister');
-                        res.render(__dirname + '/app/view/html/register.html', {info: req.flash("info")});
+                        res.render(__dirname + '/app/view/html/register.html');
                });
             });
          });
