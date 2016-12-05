@@ -61,16 +61,16 @@ router.post('/oauth', function(req, res){
 
 router.post('/deregister', function(req, res){
    fs.stat('/opt/chat-ops-common/slack-token.json', function (err, stats) {
-      if (err) res.render(__dirname + '/app/view/html/failure.html');
+      if (err) res.sendFile(path.resolve('app/view/html/failure.html'));
       fs.unlink('/opt/chat-ops-common/slack-token.json',function(err){
-          if(err) res.render(__dirname + '/app/view/html/failure.html');
+          if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
             fs.stat('/opt/chat-ops-common/c66-token.json', function (err, stats) {
-            if (err) res.render(__dirname + '/app/view/html/failure.html');
+            if (err) res.sendFile(path.resolve('app/view/html/failure.html'));
                fs.unlink('/opt/chat-ops-common/c66-token.json',function(err){
-               if(err) res.render(__dirname + '/app/view/html/failure.html');
+               if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
                    fs.stat('/opt/chat-ops-common/is-token', function (err, stats) {
                       fs.unlink('/opt/chat-ops-common/is-token',function(err){
-                        res.render(path.join(__dirname + '/app/view/html/register.html'));
+                        res.sendFile(path.resolve('app/view/html/register.html'));
                });
             });
          });

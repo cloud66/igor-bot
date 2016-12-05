@@ -15,15 +15,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use('/register', register);
-app.use(express.static(path.join(__dirname + '/app/view/css')));
-app.use(express.static(path.join(__dirname + '/app/view/html')));
+app.use(express.static(path.join(__dirname , 'app/view/css')));
+app.use(express.static(path.join(__dirname , 'app/view/html')));
 
 app.use(flash());
 app.use(session({ secret: 'keyboard cat' }))
 
-app.set('views', path.join(__dirname, '/app/view/html'));
+app.set('views', path.join(__dirname, 'app/view/html'));
 
-app.engine('.html', require('ejs').__express);
+app.engine('.html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 app.get('/', function(req, res) {
