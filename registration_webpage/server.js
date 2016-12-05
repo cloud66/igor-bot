@@ -4,6 +4,7 @@ var register = require('./app/routes/register.js');
 var fs = require('fs');
 var flash = require('connect-flash');
 var session = require('express-session');
+var path = require ('path');
 var app = express();
 
 const PORT = 8080;
@@ -20,8 +21,8 @@ app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
 
 app.use('/register', register);
-app.use(express.static(__dirname + '/app/view/css'));
-app.use(express.static(__dirname + '/app/view/html'));
+app.use(express.static(path.join(__dirname + '/app/view/css')));
+app.use(express.static(path.join(__dirname + '/app/view/html')));
 
 app.get('/', function(req, res) {
   fs.readFile('/opt/chat-ops-common/c66-token.json', 'utf8', function (err,data) {
