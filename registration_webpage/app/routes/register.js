@@ -42,6 +42,7 @@ router.post('/', function(req, res){
                           fs.unlink('/opt/chat-ops-common/is-token.txt',function(err){
                               if(err) res.redirect('/')
                               else {
+                                req.flash('info', 'Welcome');
                                 res.redirect('/')
                               }
                           });

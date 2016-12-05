@@ -15,11 +15,18 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use('/register', register);
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 app.use(express.static(path.join(__dirname , 'app/view/css')));
 app.use(express.static(path.join(__dirname , 'app/view/html')));
 
-app.use(flash());
+
 app.use(session({ secret: 'keyboard cat' }))
+app.use(flash());
 
 app.set('views', path.join(__dirname, 'app/view/html'));
 
