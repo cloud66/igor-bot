@@ -14,15 +14,17 @@ var path = require('path');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use(flash());
-app.use(session({ secret: 'keyboard cat' }))
-
-app.engine('.html', require('ejs').__express);
-app.set('view engine', 'html');
-
 app.use('/register', register);
 app.use(express.static(path.join(__dirname + '/app/view/css')));
 app.use(express.static(path.join(__dirname + '/app/view/html')));
+
+app.use(flash());
+app.use(session({ secret: 'keyboard cat' }))
+
+app.set('views', path.join(__dirname, '/app/view/html'));
+
+app.engine('.html', require('ejs').__express);
+app.set('view engine', 'html');
 
 app.get('/', function(req, res) {
   fs.readFile('/opt/chat-ops-common/c66-token.json', 'utf8', function (err,data) {
