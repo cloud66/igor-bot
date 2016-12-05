@@ -68,9 +68,9 @@ router.post('/deregister', function(req, res){
                fs.unlink('/opt/chat-ops-common/c66-token.json',function(err){
                if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
                    fs.stat('/opt/chat-ops-common/is-token', function (err, stats) {
-                   if (err) res.sendFile(path.resolve('app/view/html/failure.html'));
+                   if (err) console.log(err)
                       fs.unlink('/opt/chat-ops-common/is-token',function(err){
-                      if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
+                      if(err) console.log(err)
                       else{
                         req.flash('info', 'deregister');
                         console.log(req.flash('info'))
