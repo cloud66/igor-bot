@@ -6,6 +6,10 @@
     text-align: center;
 }
 
+.u-textNormal {
+  font-weight: normal !important;
+}
+
 .u-inlineBlock {
   display: inline-block !important;
   max-width: 100%; /* 1 */
