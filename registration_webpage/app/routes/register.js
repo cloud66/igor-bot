@@ -8,6 +8,7 @@ const credentials = {
   }
 };
 
+var flash = require('connect-flash');
 var express = require('express');
 var open = require('open');
 var request = require('request');
