@@ -72,7 +72,7 @@ router.post('/deregister', function(req, res){
                if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
                    fs.stat('/opt/chat-ops-common/is-token', function (err, stats) {
                       fs.unlink('/opt/chat-ops-common/is-token',function(err){
-                      req.flash('success', 'You successfully unregistered.');
+                      req.flash('success', 'You have successfully unregistered Igor');
                        res.redirect('/');
                });
             });

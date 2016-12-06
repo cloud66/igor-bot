@@ -11,7 +11,9 @@
 </head>
 <body>
   <% if ( expressFlash.length > 0 ) { %>
-  <p><%= expressFlash %></p>
+    <div class="Message">
+        <%= expressFlash %>
+    </div>
   <% } %>
     <header class="Header">
         <div class="Brand">
