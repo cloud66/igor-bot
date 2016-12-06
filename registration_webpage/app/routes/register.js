@@ -28,7 +28,7 @@ router.post('/', function(req, res){
       fs.writeFile("/opt/chat-ops-common/slack-token.json", "{\"slack_token\":\""+req.body.slackToken+"\"}", function(err) {
           if(err) {
             console.log(err);
-            res.sendFile(path.resolve('app/view/html/failure.html'));
+            res.sendFile(path.resolve('app/view/html/failure.html'), {errors : req.flash('info')});
           } else {
             fs.writeFile("/opt/chat-ops-common/c66-token.json", "{\"local_token\":\""+req.body.c66Token+"\"}", function(err) {
                 if(err) {
@@ -38,7 +38,6 @@ router.post('/', function(req, res){
                 else{
                   fs.stat('/opt/chat-ops-common/is-token.txt', function (err, stats) {
                       if (err) {
-                        req.flash('info', 'Welcome');
                         res.redirect('/')
                       }
                       else{
@@ -73,6 +72,7 @@ router.post('/deregister', function(req, res){
                if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
                    fs.stat('/opt/chat-ops-common/is-token', function (err, stats) {
                       fs.unlink('/opt/chat-ops-common/is-token',function(err){
+                      req.flash('success', 'You successfully unregistered.');
                        res.redirect('/');
                });
             });

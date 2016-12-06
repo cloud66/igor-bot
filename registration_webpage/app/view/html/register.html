@@ -10,13 +10,9 @@
     <title>ChatOps Install · Cloud 66</title>
 </head>
 <body>
-    <% if (messages.info){ %>
-    <div class="Message">
-      <p>test</p>
-        <%= message.info %>
-    </div>
-    <% } %>
-
+  <% if ( expressFlash.length > 0 ) { %>
+  <p><%= expressFlash %></p>
+  <% } %>
     <header class="Header">
         <div class="Brand">
             <a rel="home" href="http://www.cloud66.com/"><img src="http://www.cloud66.com/img/logo/cloud66.svg" alt="Cloud 66" width="60"></a>
