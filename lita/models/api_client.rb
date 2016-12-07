@@ -18,7 +18,7 @@ module Models
 		end
 
 		def get_stacks_from_api
-			response = RegistrationManager.instance.access_token.get("#{API_URL}/stacks.json")
+			response = RegistrationManager.new.access_token.get("#{API_URL}/stacks.json")
 			return JSON.parse(response.body)['response']
 		end
 
@@ -28,7 +28,7 @@ module Models
 		end
 
 		def get_stack_from_api(stack_id)
-			response = RegistrationManager.instance.access_token.get("#{API_URL}/stacks/#{stack_id}.json?show_log=true")
+			response = RegistrationManager.new.access_token.get("#{API_URL}/stacks/#{stack_id}.json?show_log=true")
 			return JSON.parse(response.body)['response']
 		end
 
@@ -42,7 +42,7 @@ module Models
 		end
 
 		def get_stack_services_from_api(stack_id)
-			response = RegistrationManager.instance.access_token.get("#{API_URL}/stacks/#{stack_id}/services.json")
+			response = RegistrationManager.new.access_token.get("#{API_URL}/stacks/#{stack_id}/services.json")
 			return JSON.parse(response.body)['response']
 		end
 
@@ -56,7 +56,7 @@ module Models
 			url = "#{API_URL}/stacks/#{id}/deployments.json"
 			# query_string = services.map { |service| "services=#{CGI.escape(service)}" }.join('&')
 			# url = "#{url}?#{query_string}" unless query_string.empty?
-			response = RegistrationManager.instance.access_token.post(url, { body: { services: services } })
+			response = RegistrationManager.new.access_token.post(url, { body: { services: services } })
 			return JSON.parse(response.body)['response']
 		end
 

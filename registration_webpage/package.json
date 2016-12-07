@@ -15,6 +15,7 @@
     "request": "^2.79.0",
     "session": "^0.1.0",
     "simple-oauth2": "^1.0.1",
+    "stringify-object": "^3.1.0",
     "xdg-utils": "0.0.3"
   }
 }
