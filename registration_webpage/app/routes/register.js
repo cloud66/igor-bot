@@ -8,6 +8,10 @@ const credentials = {
   }
 };
 
+var token = null
+var slack_token_location = "/opt/chat-ops-common/slack-token.json"
+var oauth_token_location = "/opt/chat-ops-common/c66-token.json"
+
 var flash = require('connect-flash');
 var express = require('express');
 var open = require('open');
@@ -16,7 +20,7 @@ var oauth2 = require('simple-oauth2').create(credentials);
 var router = express.Router();
 var fs = require('fs');
 var path = require('path');
-var token = null
+
 
 
 const authorizationUri = oauth2.authorizationCode.authorizeURL({
@@ -33,34 +37,25 @@ router.post('/', function(req, res){
   };
 
   oauth2.authorizationCode.getToken(tokenConfig, (error, result) => {
-    if (error) return console.log('Access Token Error', error.message);
+    if (error){
+      req.flash('success', 'Invalid cloud 66 token');
+      res.redirect('/');
+    }
     else{
-    token = oauth2.accessToken.create(result);
+      token = oauth2.accessToken.create(result);
       if(req.body.slackToken != "" && req.body.c66Token != ""){
-          fs.writeFile("/opt/chat-ops-common/slack-token.json", "{\"slack_token\":\""+req.body.slackToken+"\"}", function(err) {
+          fs.writeFile(slack_token_location, "{\"slack_token\":\""+req.body.slackToken+"\"}", function(err) {
               if(err) {
                 console.log(err);
                 res.sendFile(path.resolve('app/view/html/failure.html'), {errors : req.flash('info')});
-              } else {
-                fs.writeFile("/opt/chat-ops-common/c66-token.json", "{\"local_token\":\""+token.token.access_token+"\"}", function(err) {
+              }else{
+                fs.writeFile(oauth_token_location, "{\"local_token\":\""+token.token.access_token+"\"}", function(err) {
                     if(err) {
                       console.log(err);
                       res.sendFile(path.resolve('app/view/html/failure.html'));
                     }
                     else{
-                      fs.stat('/opt/chat-ops-common/is-token.txt', function (err, stats) {
-                          if (err) {
-                            res.redirect('/')
-                          }
-                          else{
-                              fs.unlink('/opt/chat-ops-common/is-token.txt',function(err){
-                                  if(err) res.redirect('/')
-                                  else {
-                                    res.redirect('/')
-                                  }
-                              });
-                          }
-                      });
+                     res.redirect('/')
                     }
                 });
               }
@@ -76,24 +71,20 @@ router.post('/oauth', function(req, res){
 });
 
 router.post('/deregister', function(req, res){
-   fs.stat('/opt/chat-ops-common/slack-token.json', function (err, stats) {
+   fs.stat(slack_token_location, function (err, stats) {
       if (err) res.sendFile(path.resolve('app/view/html/failure.html'));
-      fs.unlink('/opt/chat-ops-common/slack-token.json',function(err){
+      fs.unlink(slack_token_location,function(err){
           if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
-            fs.stat('/opt/chat-ops-common/c66-token.json', function (err, stats) {
-            if (err) res.sendFile(path.resolve('app/view/html/failure.html'));
-               fs.unlink('/opt/chat-ops-common/c66-token.json',function(err){
-               if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
-                   fs.stat('/opt/chat-ops-common/is-token', function (err, stats) {
-                      fs.unlink('/opt/chat-ops-common/is-token',function(err){
-                      req.flash('success', 'You have successfully unregistered Igor');
-                       res.redirect('/');
-               });
-            });
-         });
-      });
+          fs.stat(oauth_token_location, function (err, stats) {
+             if (err) res.sendFile(path.resolve('app/view/html/failure.html'));
+             fs.unlink(oauth_token_location,function(err){
+                 if(err) res.sendFile(path.resolve('app/view/html/failure.html'));
+                    req.flash('success', 'You have successfully unregistered Igor');
+                    res.redirect('/');
+             });
+          });
+       });
     });
-  });
-});
+ });
 
 module.exports = router;
