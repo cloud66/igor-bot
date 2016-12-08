@@ -1,7 +1,5 @@
-# RoboChat
-RoboChat is an open source Slack-bot, build by [Cloud 66](http://www.cloud66.com/?utm_source=gh&utm_medium=ghp&utm_campaign=robochat). It is your very own personal-assistant that operates on your stacks directly from the Slack chat window. Now, you can display the state of your stacks, deploy them and cancel them with simple commands such as `list` , `deploy` and `cancel`.
-
-![Codeship Status for cloud66/habitus](https://codeship.com/projects/714284d0-e914-0133-1e5d-4eaa3299b296/status)
+# Cloud 66 ChatOps
+ChatOps is an open source Slack-bot, build by [Cloud 66](http://www.cloud66.com/?utm_source=gh&utm_medium=ghp&utm_campaign=robochat). It is your very own personal-assistant that operates on your stacks directly from the Slack chat window. Now, you can display the state of your stacks, deploy them and cancel them with simple commands such as `list` , `deploy` and `cancel`.
 
 - Website: http://www.igor-bot.io/
 - [Download Igor](app.cloud66.com/easydeploys)
@@ -27,18 +25,15 @@ First thing you will need to do is to create your ChatOps bot on Slack.
 -Choose the name of your bot, the name will be required before each commands
 -Save the token for later
 
+Once you have filled the registration page you can invite your bot to any slack channels from your team you want : `/invite @bot-name`.
+
 #### Download the app
 
 Then you must install the ChatOps app from the Cloud66's app store
--Go to ` https://app.cloud66.com/easydeploys`
--Install the `ChatOps` app
--Deploy the stack
--Click on 'Browse' to access the web resgistration page for your bot.
-
-#### Register
-
-Once you have filled the registration page you can invite your bot to any slack channels from your team you want : `/invite @bot-name`.
-Now that your bot has been invited to your chat you may try any command (such as `bot-name list`).
+-   Go to ` https://app.cloud66.com/easydeploys`
+-   Install the `ChatOps` app
+-   Deploy the stack
+-   Click on 'Browse' to access the web resgistration page for your bot.
 
 #### Deregister
 
@@ -48,7 +43,6 @@ You may want to remove your bot, if so you just have to go to the registration p
 __________________________________________________________________
 
 If you wish to work on the project itself, don't worry ChatOps is open source!
-
 
 ### Documentation:
 __________________________________________________________________
