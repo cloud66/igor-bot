@@ -3,7 +3,7 @@ require 'json'
 
 module Models
 	class ApiClient
-		API_URL = 'https://stage.cloud66.com/api/3'
+		API_URL = 'https://app.cloud66.com/api/3'
 
 		def get_stacks(stack_name: nil, environment: nil)
 			stacks_hash = get_stacks_from_api

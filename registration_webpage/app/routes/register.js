@@ -4,7 +4,7 @@ const credentials = {
     secret: "a5b9ee72d0fceb9c1091e995f867d80e9abf28c164621569a8f3d704e8b5905c"
   },
   auth: {
-    tokenHost: 'https://stage.cloud66.com/oauth/authorize'
+    tokenHost: 'https://app.cloud66.com/oauth/authorize'
   }
 };
 

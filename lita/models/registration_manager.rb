@@ -22,7 +22,7 @@ module Models
 		def load_c66_token_info(token_location)
 			if File.exist?(token_location)
 				config = JSON.parse(File.read(token_location)).symbolize_keys
-				client = OAuth2::Client.new(APP_UID, APP_SECRET, :site => 'https://stage.cloud66.com')
+				client = OAuth2::Client.new(APP_UID, APP_SECRET, :site => 'https://app.cloud66.com')
 				self.access_token = OAuth2::AccessToken.new(client, config[:local_token])
 			end
 		rescue => exc
