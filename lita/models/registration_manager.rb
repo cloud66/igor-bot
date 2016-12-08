@@ -8,8 +8,8 @@ module Models
 		attr_accessor :access_token
 
 		TOKEN_LOCATION = "/opt/chat-ops-common/c66-token.json"
-		APP_UID = "b5de172cffa26c681954c96adb55fd8d5d7c5298bcc7669e4969241fa92b413f"
-		APP_SECRET = "1d639bc0b2296aebdb7f0737645545ea2506ca8d20d0f9e34d976ba704debf23"
+		APP_UID = '72677fe32373ec3351a64424a5129718fc9d06715cdbc8af16f5a412713e3b5c'
+		APP_SECRET = 'a5b9ee72d0fceb9c1091e995f867d80e9abf28c164621569a8f3d704e8b5905c'
 
 		def initialize
 			load_c66_token_info(TOKEN_LOCATION)

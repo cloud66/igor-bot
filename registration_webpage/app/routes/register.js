@@ -1,7 +1,7 @@
 const credentials = {
   client: {
-    id: "b5de172cffa26c681954c96adb55fd8d5d7c5298bcc7669e4969241fa92b413f",
-    secret: "1d639bc0b2296aebdb7f0737645545ea2506ca8d20d0f9e34d976ba704debf23"
+    id: "72677fe32373ec3351a64424a5129718fc9d06715cdbc8af16f5a412713e3b5c",
+    secret: "a5b9ee72d0fceb9c1091e995f867d80e9abf28c164621569a8f3d704e8b5905c"
   },
   auth: {
     tokenHost: 'https://stage.cloud66.com/oauth/authorize'
