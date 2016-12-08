@@ -17,7 +17,7 @@ module Lita
 				return unless message_from_context().command?
 				return if self.robot.mention_name == message_from_context.user.mention_name
 				unless ::Models::RegistrationManager.new.is_registered?
-					text = "To authorize this Cloud 66 Slack-Bot\n\n -Go the registration web page of your personnal bot"
+					text = "To authorize this Cloud 66 Slack-Bot\n\n -Go the registration web page of your personnal bot. For more information go to http://help.cloud66.com/chatops/chatops-help"
 					fallback = 'Authorization required!'
 					reply(title: 'Not Authorized!', color: Colors::ORANGE, text: text, fallback: fallback)
 					return
@@ -76,11 +76,11 @@ module Lita
 				end
 			rescue => exc
  				if exc.is_a?(Trollop::HelpNeeded) && ["deploy", "redeploy"].include?(command_from_message)
-					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "Refer to the documentation", fallback: exc.message)
+					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "Deploy allows you to deploy a specific stack whith the -s option. For more information go to http://help.cloud66.com/chatops/manage-your-stacks-with-chatops", fallback: exc.message)
 				elsif exc.is_a?(Trollop::HelpNeeded) && ["stop", "cancel", "exit", "halt"].include?(command_from_message)
-					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "Refer to the documentation", fallback: exc.message)
+					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "Cancel allows you to cancel the future deployement of a stack that has been queued with the option -s. For more information go to http://help.cloud66.com/chatops/manage-your-stacks-with-chatops", fallback: exc.message)
 				elsif exc.is_a?(Trollop::HelpNeeded) && ["list", "get", "show", "find"].include?(command_from_message)
-					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "Refer to the documentation", fallback: exc.message)
+					reply(title: "Help for #{command_from_message}", color: Colors::BLACK, text: "List allows you to list all the stacks your account have access to and display the name, state, server, environment. You can choose to list one particular stack with the '-s' option. For more information go to http://help.cloud66.com/chatops/manage-your-stacks-with-chatops", fallback: exc.message)
 				elsif exc.is_a?(OAuth2::Error)
 					reply(title: "Token error", color: Colors::RED, text: "The Cloud 66 token provided is not valid, please try re-register using the registration page.", fallback: exc.message)
 				else

@@ -18,7 +18,7 @@ describe Lita::Handlers::Deployer, lita_handler: true, additional_lita_handlers:
 
   it "order to display help for deploy" do
     send_command("deploy -h")
-    expect(replies).to eq([{:title=>"Help for deploy", :text=>"Refer to the documentation", :color=>"#000000", :fallback=>"Trollop::HelpNeeded", :mrkdwn_in=>["text"], :pretext=>nil}])
+    expect(replies.first[:title]).to match(/Help for deploy/)
   end
 
   it "order to deploy an existing stack with command 'deploy'" do
