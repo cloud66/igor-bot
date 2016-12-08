@@ -95,7 +95,7 @@ Trying to deploy a stack which is actually deploying will get you differents war
 
 Here is an example :
 
-`igor deploy -s my-stack-name -w false
+`igor deploy -s my-stack-name -w false`
 
 #### List
 
