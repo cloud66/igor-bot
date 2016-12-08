@@ -1,7 +1,5 @@
-# RoboChat
-RoboChat is an open source Slack-bot, build by [Cloud 66](http://www.cloud66.com/?utm_source=gh&utm_medium=ghp&utm_campaign=robochat). It is your very own personal-assistant that operates on your stacks directly from the Slack chat window. Now, you can display the state of your stacks, deploy them and cancel them with simple commands such as `list` , `deploy` and `cancel`.
-
-![Codeship Status for cloud66/habitus](https://codeship.com/projects/714284d0-e914-0133-1e5d-4eaa3299b296/status)
+# Cloud 66 ChatOps
+ChatOps is an open source Slack-bot, build by [Cloud 66](http://www.cloud66.com/?utm_source=gh&utm_medium=ghp&utm_campaign=robochat). It is your very own personal-assistant that operates on your stacks directly from the Slack chat window. Now, you can display the state of your stacks, deploy them and cancel them with simple commands such as `list` , `deploy` and `cancel`.
 
 - Website: http://www.igor-bot.io/
 - [Download Igor](app.cloud66.com/easydeploys)
@@ -21,24 +19,21 @@ __________________________________________________________________
 #### Create a Slack bot
 
 First thing you will need to do is to create your ChatOps bot on Slack.
--Go to `https://you_slack_team.slack.com/apps/manage/custom-integrations` 
--Go to `Bots`
--Go to `Add Configuration`
--Choose the name of your bot, the name will be required before each commands
--Save the token for later
+- Go to `https://you_slack_team.slack.com/apps/manage/custom-integrations` 
+- Go to `Bots`
+- Go to `Add Configuration`
+- Choose the name of your bot, the name will be required before each commands
+- Save the token for later
+
+Once you have filled the registration page you can invite your bot to any slack channels from your team you want : `/invite @bot-name`.
 
 #### Download the app
 
 Then you must install the ChatOps app from the Cloud66's app store
--Go to ` https://app.cloud66.com/easydeploys`
--Install the `ChatOps` app
--Deploy the stack
--Click on 'Browse' to access the web resgistration page for your bot.
-
-#### Register
-
-Once you have filled the registration page you can invite your bot to any slack channels from your team you want : `/invite @bot-name`.
-Now that your bot has been invited to your chat you may try any command (such as `bot-name list`).
+-   Go to ` https://app.cloud66.com/easydeploys`
+-   Install the `ChatOps` app
+-   Deploy the stack
+-   Click on 'Browse' to access the web resgistration page for your bot.
 
 #### Deregister
 
@@ -48,7 +43,6 @@ You may want to remove your bot, if so you just have to go to the registration p
 __________________________________________________________________
 
 If you wish to work on the project itself, don't worry ChatOps is open source!
-
 
 ### Documentation:
 __________________________________________________________________
@@ -101,7 +95,7 @@ Trying to deploy a stack which is actually deploying will get you differents war
 
 Here is an example :
 
-`igor deploy -s my-stack-name -w false
+`igor deploy -s my-stack-name -w false`
 
 #### List
 
@@ -128,11 +122,27 @@ Depending of the actual state of the stack you are trying to cancel you will get
 ### Help:
 __________________________________________________________________
 
-###### If the bot doesn't connect to Slack
-
-If you can't see your bot connected among the members of your channel on Slack it means the container running Igor ChatOps failed to launch due to an incorrect 
-
 
 ###### If the bot doesn't connect to Slack
 
-regjnerlnerikljnegrk gr
+
+If you can't see your bot connected among the members of your channel on Slack it means the container running Igor ChatOps failed to launch due to an incorrect slack token, you will need to redeploy your stack and set a valid one.
+
+
+(in reality if the service fail to launch is will try again every x seconds a certain number of times but I am not sure about this rule, so if the user realize he sent a wrong slack token, he can change it and it will work. But if he waits for too long before updating with a valid one then the service will not try to relaunch, should we say something in the help or just do your redeploy ?)
+
+
+
+
+###### If the bot doesn't connect to Cloud 66 API
+
+
+If you successfully connected igor to slack you may however have set a wrong Cloud 66 token. In this case Igor will answer you saying he can’t access Cloud 66 and you must update your token on the registration page  (no need to redeploy).
+
+
+
+
+###### If you get an error while registration
+
+
+If you are redirected to the error page it means we had trouble creating a file on the host and you should set the rights to the service.
