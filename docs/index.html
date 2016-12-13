@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Cloud 66 ChatOps : Igor |Manage your stacks from Slack</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css?v=2" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new
+Date();a=s.createElement(o),
+
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a
+,m)
+
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-25691976-10', 'auto');
+ga('send', 'pageview');
+</script>
+  </head>
+  <body>
+    <section class="page-header">
+      <img src="./images/igor.png" width="100"/>
+      <h1 class="project-name">Cloud 66 ChatOps : Igor</h1>
+      <h2 class="project-tagline">A Slack bot to manage your stacks</h2>
+      <a href="https://app.cloud66.com/easydeploys" target="_blank" class="btn">Download Igor</a>
+      <a href="https://github.com/cloud66/igor-bot" target="_blank" class="btn" >View on GitHub</a>
+      <p class="logo"><a href="http://www.cloud66.com/?utm_source=Hpage&utm_medium=Hpage&utm_campaign=Habitus"><img src="images/C66white.png" width="40" /></a> </p>
+      <p class = "logotext">Igor is maintained by Cloud 66</p>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Igor</h3>
+<p>Igor is an open source Slack-bot, built by <a href="http://www.cloud66.com/?utm_source=gh&utm_medium=ghp&utm_campaign=robochat">Cloud 66</a>. It is your very own personal-assistant that operates on your stacks directly from the Slack chat window. Now, you can display the state of your stacks, deploy them and cancel them with simple commands such as <code>list</code> , <code>deploy</code> and <code>cancel</code>.</p>
+
+<h4>Key features</h4>
+<ul>
+<li>Open Source project </li>
+<li>Easy to customise to your work-flow</li>
+<li>Manage your Cloud 66 stacks from Slack</li>
+<li>Allows you to deploy specific services from specific stacks</li>
+<li>Allows you to cancel deploying stacks</li>
+<li>Allows you to display the state of your stacks for you or your team</li>
+</ul>
+
+<h4>Quick install</h4>
+<h5>Create a Slack bot</h5>
+<p>First thing you will need to do is to create your ChatOps bot on Slack.</p>
+
+<ul>
+<li>Go to <a href="https://you_slack_team.slack.com/apps/manage/custom-integrations">https://you_slack_team.slack.com/apps/manage/custom-integrations</a> </li>
+<li>Go to <code>Bots</code></li>
+<li>Go to <code>Add configuration</code></li>
+<li>Choose the name of your bot, the name will be required before each commands</li>
+<li>Save the token for later</li>
+</ul>
+
+<p>Once you have filled the registration page you can invite your bot to any slack channels from your team you want : <code>/invite @bot-name</code>.</p>
+<p>Each artefact has two parts: source and destination. Source is the path from within the image and destination where the file will be copied to on the "build server". If destination is missing, the current folder will be used. Full path and file permissions of the source will be preserved during copy. So a file that comes from <code>/app/build/result/abc</code> of the image will go to <code>./app/build/result/abc</code> of the build server if no destination is set.</p>
+
+<h5>Download the app</h5>
+
+<ul>
+<li>Go to <a href="https://app.cloud66.com/easydeploys">https://app.cloud66.com/easydeploys</a></li>
+<li>Install the <code>ChatOps</code> app</li>
+<li>Deploy the stack</li>
+<li>Click on <code>Browse</code> to access the web resgistration page for your bot and follow the instructions.</li>
+</ul>
+
+<h5>Deregister</h5>
+
+<p>You may want to remove your bot, if so you just have to go to the registration page from the <code>Browse</code> of your ChatOps container and then clic on deregister. You will need to redeploy the stack for this to take effect.</p>
+
+<h4>Developing RoboChat:</h4>
+
+<p>If you wish to work on the project itself, don't worry ChatOps is open source!</p>
+
+<h4>Documentation:</h4>
+
+<p>The commands are the key words we are adressing to igor so that he can do the rigth operations. To give him an order you must call him by his name and then enter one of the following commands.</p>
+
+<p>Here is an exemple :</p>
+
+<p><code>igor deploy -s my-stack-name</code></p>
+
+<p>Here is a list of all the commands:</p>
+
+<ul>
+<li><code>deploy</code> | <code>redeploy</code> : Deploy the specified stack.</li>
+<li><code>cancel</code> | <code>stop</code> | <code>exit</code> | <code>halt</code> : Cancel the specified stack.</li>
+<li><code>list</code> | <code>get</code> | <code>show</code> | <code>find</code> | <code>stacks</code> : List all the stacks or a specified one.</li>
+</ul>
+
+<p>Commands you are giving to igor may accept or need options. In the next part we will see the options for each commands. If you try to use a wrong option, igor will respond with a usage message corresponding to the command you tried to use, if the usage message is not enough you may find an answer with the help option.</p>
+
+<p>Here is an example:</p>
+
+<p><code>igor deploy -h</code></p>
+
+<ul>
+<li>To specify an environment you need to use the `-e` option followed by the full name of the environment.</li>
+<li>To specify a stack you need to use the `-s` option followed by the full name of the stack.</li>
+<li>lTo specify a service you need to use the `-v` option followed by the full name of the environment.</li>
+</ul>
+
+
+<p>Here is an example of the docker service in the stack `my-stack-name` from production environment:</p>
+
+<code>igor deploy -e production -s my-stack-name -v docker</code>
+
+<p>or </p>
+
+<code>igor deploy -v docker -e production -s my-stack-name</code>
+
+<p>The order of the options doesn't matter.</p>
+
+<h5>Deploy</h5>
+
+<p>The deploy command is the best alternative to deploy your stacks. Instead of going on your Cloud 66 accounr or use the toolbelt you will be able to directly do it from Slack. The deploy command only works if you provide the exact name of an existing stack, the other options such as environment ans services are optional. You will be warn if the stack you specified dosen't exist.</p>
+
+<p>Here is an exemple :</p>
+
+<code>igor deploy -s my-stack-name</code>
+
+<p>or</p>
+
+<code>igor deploy -e production -s my-stack-name -v docker</code>
+
+<p>Trying to deploy a stack which is actually deploying will get you differents warning according to where it was launch first time. If it was from slack then the response will simply be that it is already deploying. If it was directly from Cloud 66 then you will be noticed that the deploy is now queued. If you don't want the stack to be queued for later deploy then use the `-w` option and set it as false.</p>
+
+<p>Here is an example :</p>
+
+<code>igor deploy -s my-stack-name -w false</code>
+
+<h5>List</h5>
+
+<p>Listing the stack allow you to display for you or your team the actual state of one or multiples stack. You can choose to show 1 particular stack using the `-s` option or display all of them without using any options.</p>
+
+<code>igor list -s my-stack-name</code>
+
+<p>or</p>
+
+<code>igor list</code>
+
+<h5>Cancel</h5>
+
+<p>The cancel command needs a stack as an option using `-s` and this is the same process as the other commands requiring a stack, you can use `-e` to choose the environment and `-v` to choose the service.</p>
+
+<p>Here is an exemple :
+
+<code>cancel -s my-stack-name</code>
+
+<p>Depending of the actual state of the stack you are trying to cancel you will get the apropriate answer such as already deploying, already cancelling, trying to cancel.</p>
+
+<h4>Help:</h4>
+
+<h5>If the bot doesn't connect to Slack</h5>
+
+<p>If you can't see your bot connected among the members of your channel on Slack it means the container running Igor ChatOps failed to launch due to an incorrect slack token, you will need to redeploy your stack and set a valid one.</p>
+
+<p>(in reality if the service fail to launch is will try again every x seconds a certain number of times but I am not sure about this rule, so if the user realize he sent a wrong slack token, he can change it and it will work. But if he waits for too long before updating with a valid one then the service will not try to relaunch, should we say something in the help or just do your redeploy ?)</p>
+
+<h5>If the bot doesn't connect to Cloud 66 API</h5>
+
+<p>If you successfully connected igor to slack you may however have set a wrong Cloud 66 token. In this case Igor will answer you saying he can’t access Cloud 66 and you must update your token on the registration page  (no need to redeploy).</p>
+
+<h5>If you get an error while registration</h5>
+
+<p>If you are redirected to the error page it means we had trouble creating a file on the host and you should set the rights to the service.</p>
+
+<p class="call-to-action">
+<a href="https://github.com/cloud66/igor-bot" class="btn1" >Download Igor</a>
+<!-- https://github.com/cloud66/habitus/releases?utm_source=Githubdownload&utm_medium=GHDpage&utm_campaign=habitus -->
+<a href="https://cloud66ers.slack.com/messages/igor" class="btn1" >Discuss on Slack</a>
+<a href="http://blog.cloud66.com/tag/igor/" class="btn1" >Read more &rarr;</a>
+</p>
+
+
+<footer class="site-footer">
+  <span class="site-footer-owner">
+
+
+
+</footer>
+
+</section>
+<!-- Social Media Share buttons-->
+<!-- LinkedIn -->
+<div class="socialbuttons">
+ <a class="socialbutton" href="http://www.linkedin.com/shareArticle?url=http://www.chatops.cloud66.com" target="_blank">
+  <i class="fa fa-linkedin"></i>
+ </a>
+
+<!-- Reddit -->
+  <a class="socialbutton" href="http://reddit.com/submit?url=http://www.habitus.io/&amp;title=Habitus: an open source Docker build flow tool" target="_blank">
+   <i class="fa fa-reddit-alien"></i>
+  </a>
+
+<!-- Twitter -->
+  <a class="socialbutton" href="https://twitter.com/share?url=http://www.chatops.cloud66.com: an open source to manage your stacks by Cloud 66 &amp;hashtags=ChatOps,Igor" target="_blank">
+   <i class="fa fa-twitter"></i>
+  </a>
+
+<!--Slack Habitus Community -->
+ <a class="socialbutton" href="https://cloud66ers.slack.com/messages/igor">
+  <i class="fa fa-slack"></i>
+ </a>
+
+</div>
+
+
+
+  </body>
+</html>
