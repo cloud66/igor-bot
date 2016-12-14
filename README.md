@@ -30,17 +30,15 @@ Once you have filled the registration page you can invite your bot to any slack 
 
 You can install the app either from the Cloud 66 app store or from the docker-compose
 
-### On Cloud 66 app store
-
 Then you must install the ChatOps app from the Cloud66's app store
 -   Go to ` https://app.cloud66.com/easydeploys`
 -   Install the `ChatOps` app
 -   Deploy the stack
 -   Click on 'Browse' to access the web resgistration page for your bot.
 
-### With docker-compose
+or
 
-The docker-compose file is available here https://github.com/cloud66/igor-bot/edit/feature/testing_enhancements/README.md
+the docker-compose file is available here https://github.com/cloud66/igor-bot/edit/feature/testing_enhancements/README.md
 
 #### Deregister
 
