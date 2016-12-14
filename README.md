@@ -38,7 +38,7 @@ Then you must install the ChatOps app from the Cloud66's app store
 
 or
 
-the docker-compose file is available here https://github.com/cloud66/igor-bot/edit/feature/testing_enhancements/README.md
+the docker-compose file is available here https://github.com/cloud66/igor-bot/docker-compose.yml
 
 #### Deregister
 
