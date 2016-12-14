@@ -64,37 +64,38 @@ Here is an exemple :
 
 Here is a list of all the operations you can do with Igor:
 
-##Commands:
+##### Commands:
 
 -   `deploy` : Deploy the specified stack - a stack is required.
 -   `cancel` : Remove the stack from the deployment queue - a stack is required
 -   `list` : List either all stacks, or a specific one
 
-##Flags:
+#### Flags:
 
 -   `--stack` | `-s` : The exact name of the stack
 -   `--environment` | `-e`  : The environment of the stack
 -   `--services` | `-v` : The name of a service in the stack
 -   `--wait` | `-w` : By default, if the stack is already deploying from Cloud 66, or Igor is waiting for a custom webhook URL, the deploy command will queue the stack for a later deploy. To avoid queuing, use `-w false`
 
-##Queue deployment
 
+### Queue deployment:
+__________________________________________________________________
 If you want igor to queue a deployment based on a custom webhook URL (for example, wait until the stack has no busy workers before deploying), you can use the igor-bot/config/config.yml file.
 
 
-### Help:
+#### Help:
 __________________________________________________________________
 
 
-###### If the bot doesn't connect to Slack
+### If the bot doesn't connect to Slack
 
 If you can't see your bot connected among the members of your channel on Slack it means the container running Igor ChatOps failed to launch - likely due to an incorrect slack token. You will need to redeploy your stack and set a valid one.
 
-###### If Igor cannot connect to the Cloud 66 API
+### If Igor cannot connect to the Cloud 66 API
 
 If you have successfully connected Igor to Slack but it cannot access Cloud 66, you may have set an incorrect Cloud 66 token. You can try updating your Cloud 66 token on the registration page.
 
-###### If you get an error during registration
+### If you get an error during registration
 
 One possible reason for this is that the container does not have access to write to the host - if so, you can try setting the correct folder permissions.
 
