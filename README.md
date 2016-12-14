@@ -49,7 +49,7 @@ __________________________________________________________________
 
 Feel free to contibute to Igor - it's an open source project available on Github!
 
-https://github.com/cloud66/igor-bot">https://github.com/cloud66/igor-bot
+https://github.com/cloud66/igor-bot
 
 ### Documentation:
 __________________________________________________________________
