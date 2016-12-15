@@ -1,0 +1,18 @@
+igor:
+  image: cloud66/igor:latest
+  volumes:
+   - .:/opt/chat-ops-common
+  links:
+   - redis
+  expose:
+    - 8080:8080
+
+igor-registration:
+  image: cloud66/igor-webpage:latest
+  volumes:
+   - .:/opt/chat-ops-common
+  expose:
+    - 8080:80
+
+redis:
+  image: redis:latest

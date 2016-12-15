@@ -64,7 +64,7 @@ a {
 .page-header {
   color: #fff;
   text-align: center;
-  background-color: #9e9ea2;
+  background-color: #9E9EA2;
 /*background-image: linear-gradient(120deg, rgba(152, 142, 17, 0), #0FC4CB);*/ }
 
 @media screen and (min-width: 64em) {
@@ -120,7 +120,7 @@ a {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: normal;
-  color: #159957; }
+  color: #60C660; }
 .main-content p {
   margin-bottom: 1em; }
 .main-content code {
