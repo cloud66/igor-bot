@@ -24,6 +24,7 @@ module Lita
 					opt :wait, 'Wait for the stack to become available (if it is busy)', short: 'w'
 				})
 			end
+
 			CANCEL_REGEX = /\A\s*(stop|cancel|exit|halt)(\s\-\D|\z)/i
 			route(CANCEL_REGEX, command: true, help: { cancel: '_Cancel your Queued Deploys_' }) do |context|
 				secure_method_invoker(context, method(:handle_cancel), options_parser: Trollop::Parser.new {

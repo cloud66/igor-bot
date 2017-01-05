@@ -15,6 +15,17 @@ module Lita
 				})
 			end
 
+			VESION_REGEX = /\A\s*(version)(\s\-\D|\z)/i
+			route(VESION_REGEX, command: true, help: { cancel: '_Display the version of Igor_' }) do |context|
+				secure_method_invoker(context, method(:display_version), options_parser: Trollop::Parser.new {
+					banner '*Usage:* _version_'
+				})
+			end
+
+			def display_version(options = {})
+				reply(text: "The version of Igor is : #{IGOR_VERSION}", color: Colors::BLUE)
+			end
+
 			def handle_list(options = {})
 				client = Models::ApiClient.new
 				stacks = client.get_stacks(stack_name: options[:stack], environment: options[:environment])
