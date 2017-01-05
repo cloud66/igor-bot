@@ -1,4 +1,5 @@
 APP_ROOT_PATH = File.expand_path(File.dirname(__FILE__))
+IGOR_VERSION = "1.0.1"
 require 'fileutils'
 require 'json'
 Dir['lita/lib/*.rb'].each { |file| require_relative file }

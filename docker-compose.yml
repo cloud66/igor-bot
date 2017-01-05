@@ -1,5 +1,5 @@
 igor:
-  image: cloud66/igor:a
+  image: cloud66/igor:1.0
   volumes:
    - .:/opt/chat-ops-common
   links:
@@ -11,7 +11,7 @@ igor:
     - "8080:8080"
 
 igor-registration:
-  image: cloud66/igor-webpage:a
+  image: cloud66/igor-webpage:1.0
   volumes:
    - .:/opt/chat-ops-common
   ports:
