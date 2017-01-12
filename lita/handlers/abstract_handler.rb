@@ -113,6 +113,10 @@ module Lita
 			# 	end
 			# end
 
+			def message_from_user()
+				message_from_context().body
+			end
+
 			def command_from_message()
 				Shellwords.split(message_from_context().body).first
 			end
