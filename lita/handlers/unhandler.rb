@@ -7,7 +7,7 @@ module Lita
       end
 
       def handle_wrong_command(options = {})
-        text = "Sorry, I don’t understand this command! \"#{command_from_message}\"\nPlease try one of the following: *deploy*, *cancel*, *list*!"
+        text = "Sorry, I don’t understand this command! \"#{message_from_user}\"\nPlease try one of the following: *deploy*, *cancel*, *list*!"
         reply(title: "Unknown command", color: Colors::ORANGE, text: text, fallback: "Sorry, I don't understand this command!")
       end
 
