@@ -75,9 +75,7 @@ module Lita
 					reply(text: "#{header(stack, services)} already #{status}", color: Colors::ORANGE)
 					return
 				end
-
-
-
+				
 				if stack.active?
 					if wait
 						reply(text: "#{header(stack, services)} busy (_Cloud 66_ checkup); Exiting", color: Colors::ORANGE) and return
