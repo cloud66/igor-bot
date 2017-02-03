@@ -2,7 +2,8 @@ require 'httparty'
 require 'trollop'
 require 'shellwords'
 require 'i18n'
-
+require 'yaml'
+require 'pp'
 
 module Lita
 	module Handlers

@@ -76,6 +76,8 @@ module Lita
 					return
 				end
 
+
+
 				if stack.active?
 					if wait
 						reply(text: "#{header(stack, services)} busy (_Cloud 66_ checkup); Exiting", color: Colors::ORANGE) and return
@@ -109,11 +111,13 @@ module Lita
 				client = Models::ApiClient.new
 				while (stack.active? || stack.custom_active?) && stack.get_local_status(REDIS_PREFIX) != :cancelling
 					raise 'Timeout while waiting for stack' if Time.new > final_time
-					sleep(1) # CHANGE BACK TO WAIT_CHECK_FREQ
+					sleep(WAIT_CHECK_FREQ)
 					stack = client.get_stack(stack.id)
 				end
-				# if it crashes here, it will currently keep queued/cancelling status forever
 				return stack
+			rescue => exc
+				stack.set_local_status(REDIS_PREFIX, WAIT_TIMEOUT, :none)
+				raise exc
 			end
 
 			def perform_deploy(stack, services)
@@ -122,6 +126,7 @@ module Lita
 				# exit if its been cancelled
 				if stack.get_local_status(REDIS_PREFIX) == :cancelling
 					reply(text: "#{header(stack, services)} deploy cancelled", color: Colors::GREEN)
+					stack.set_local_status(REDIS_PREFIX, WAIT_TIMEOUT, :none)
 					return
 				end
 
