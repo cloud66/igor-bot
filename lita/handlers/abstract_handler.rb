@@ -3,7 +3,6 @@ require 'trollop'
 require 'shellwords'
 require 'i18n'
 
-
 module Lita
 	module Handlers
 		class AbstractHandler < Lita::Handler
