@@ -77,7 +77,7 @@ GEM
       byebug (~> 9.0)
       pry (~> 0.10)
     puma (3.6.0)
-    rack (2.0.1)
+    rack (2.0.8)
     rack-test (0.6.3)
       rack (>= 1.0)
     rb-readline (0.5.3)
