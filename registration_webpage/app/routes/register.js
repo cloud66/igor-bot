@@ -1,7 +1,7 @@
 const credentials = {
   client: {
-    id: "72677fe32373ec3351a64424a5129718fc9d06715cdbc8af16f5a412713e3b5c",
-    secret: "a5b9ee72d0fceb9c1091e995f867d80e9abf28c164621569a8f3d704e8b5905c"
+    id: "<your c66 application id>",
+    secret: "<your c66 application secret>"
   },
   auth: {
     tokenHost: 'https://app.cloud66.com/oauth/authorize'
